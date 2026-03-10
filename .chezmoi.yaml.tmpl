@@ -1,5 +1,8 @@
 {{- $email := promptStringOnce . "email" "Email address" -}}
-{{- $hostname := promptStringOnce . "hostname" "Hostname" -}}
+{{- $hostname := promptStringOnce . "hostname" "Hostname (leave blank to use system hostname)" -}}
+{{- if eq $hostname "" -}}
+{{-   $hostname = .chezmoi.hostname -}}
+{{- end -}}
 
 data:
   email: {{ $email | quote }}
