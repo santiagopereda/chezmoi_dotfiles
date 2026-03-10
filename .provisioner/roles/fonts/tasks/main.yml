@@ -1,0 +1,12 @@
+---
+- name: Install Nerd Fonts (Linux)
+  ansible.builtin.import_tasks: fonts-linux.yml
+  when: ansible_os_family != "Darwin"
+  tags:
+    - fonts
+
+- name: Install Nerd Fonts (macOS)
+  ansible.builtin.import_tasks: fonts-darwin.yml
+  when: ansible_os_family == "Darwin"
+  tags:
+    - fonts

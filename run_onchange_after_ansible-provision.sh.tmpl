@@ -1,0 +1,29 @@
+#!/bin/bash
+# chezmoi:template:left-delimiter="{{" right-delimiter="}}"
+#
+# Run Ansible playbook when provisioner files change.
+# chezmoi detects changes via the sha256sum hashes below.
+set -euo pipefail
+
+# -- Change detection hashes (chezmoi re-runs this script when any hash changes) --
+# group_vars: {{ include ".provisioner/group_vars/all.yml" | sha256sum }}
+# local.yml: {{ include ".provisioner/local.yml" | sha256sum }}
+# common/tasks: {{ include ".provisioner/roles/common/tasks/main.yml" | sha256sum }}
+# security/tasks: {{ include ".provisioner/roles/security/tasks/main.yml" | sha256sum }}
+# docker/tasks: {{ include ".provisioner/roles/docker/tasks/main.yml" | sha256sum }}
+# shell/tasks: {{ include ".provisioner/roles/shell/tasks/main.yml" | sha256sum }}
+# python/tasks: {{ include ".provisioner/roles/python/tasks/main.yml" | sha256sum }}
+# fonts/tasks: {{ include ".provisioner/roles/fonts/tasks/main.yml" | sha256sum }}
+
+CHEZMOI_SOURCE="{{ .chezmoi.sourceDir }}"
+PROVISIONER_DIR="$CHEZMOI_SOURCE/.provisioner"
+
+echo "==> Running Ansible provisioner..."
+
+export PATH="$HOME/.local/bin:$PATH"
+
+ANSIBLE_CONFIG="$PROVISIONER_DIR/ansible.cfg" \
+  ansible-playbook "$PROVISIONER_DIR/local.yml" \
+  --diff
+
+echo "==> Ansible provisioning complete."

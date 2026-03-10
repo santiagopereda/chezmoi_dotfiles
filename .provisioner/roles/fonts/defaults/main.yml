@@ -1,0 +1,2 @@
+---
+nerd_font_dir: "{{ desktop_home }}/.local/share/fonts/NerdFonts"

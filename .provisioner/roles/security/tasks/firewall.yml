@@ -1,0 +1,43 @@
+---
+- name: Install ufw
+  ansible.builtin.apt:
+    name: ufw
+    state: present
+  tags:
+    - security
+    - firewall
+
+- name: Set ufw default deny incoming
+  community.general.ufw:
+    direction: incoming
+    default: deny
+  notify: reload ufw
+  tags:
+    - security
+    - firewall
+
+- name: Set ufw default allow outgoing
+  community.general.ufw:
+    direction: outgoing
+    default: allow
+  notify: reload ufw
+  tags:
+    - security
+    - firewall
+
+- name: Allow SSH through ufw
+  community.general.ufw:
+    rule: allow
+    port: "{{ security_ssh_port | string }}"
+    proto: tcp
+  notify: reload ufw
+  tags:
+    - security
+    - firewall
+
+- name: Enable ufw
+  community.general.ufw:
+    state: enabled
+  tags:
+    - security
+    - firewall

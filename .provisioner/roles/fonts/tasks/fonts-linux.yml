@@ -1,0 +1,22 @@
+---
+- name: Create fonts directory
+  ansible.builtin.file:
+    path: "{{ nerd_font_dir }}"
+    state: directory
+    mode: "0755"
+  become: true
+  become_user: "{{ desktop_user }}"
+  tags:
+    - fonts
+
+- name: Download and extract {{ nerd_font_name }} Nerd Font
+  ansible.builtin.unarchive:
+    src: "https://github.com/ryanoasis/nerd-fonts/releases/download/v{{ nerd_font_version }}/{{ nerd_font_name }}.zip"
+    dest: "{{ nerd_font_dir }}"
+    remote_src: true
+    creates: "{{ nerd_font_dir }}/{{ nerd_font_name }}NerdFont-Regular.ttf"
+  become: true
+  become_user: "{{ desktop_user }}"
+  notify: rebuild font cache
+  tags:
+    - fonts

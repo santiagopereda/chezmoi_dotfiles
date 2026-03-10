@@ -1,0 +1,27 @@
+---
+- name: Ensure Homebrew is installed
+  ansible.builtin.stat:
+    path: /opt/homebrew/bin/brew
+  register: homebrew_check
+  tags:
+    - common
+    - packages
+
+- name: Install Homebrew
+  ansible.builtin.shell:
+    cmd: /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    creates: /opt/homebrew/bin/brew
+  become: false
+  when: not homebrew_check.stat.exists
+  tags:
+    - common
+    - packages
+
+- name: Install common packages via Homebrew
+  community.general.homebrew:
+    name: "{{ common_packages_darwin + extra_packages_darwin }}"
+    state: present
+  become: false
+  tags:
+    - common
+    - packages

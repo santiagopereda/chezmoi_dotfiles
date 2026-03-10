@@ -1,0 +1,2 @@
+---
+# No role-specific defaults — all variables are defined in group_vars/all.yml

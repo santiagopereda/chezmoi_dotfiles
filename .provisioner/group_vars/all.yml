@@ -1,0 +1,58 @@
+---
+# User configuration
+desktop_user: "{{ ansible_user_id }}"
+desktop_home: "{{ ansible_facts.user_dir | default('~' + desktop_user) }}"
+
+# Python versions to install via uv
+python_versions:
+  - "3.13"
+
+# Nerd Font
+nerd_font_name: Hack
+nerd_font_version: "3.3.0"
+nerd_font_cask: font-hack-nerd-font
+
+# Common packages - Debian/Ubuntu
+common_packages_debian:
+  - git
+  - make
+  - build-essential
+  - curl
+  - wget
+  - unzip
+  - jq
+  - tree
+  - neovim
+  - tmux
+  - tmuxinator
+  - zsh
+  - direnv
+  - imagemagick
+  - ranger
+
+# Common packages - macOS (Homebrew)
+common_packages_darwin:
+  - git
+  - curl
+  - wget
+  - unzip
+  - jq
+  - tree
+  - neovim
+  - tmux
+  - tmuxinator
+  - zsh
+  - direnv
+  - imagemagick
+  - ranger
+
+# Docker
+docker_packages_debian:
+  - docker-ce
+  - docker-ce-cli
+  - containerd.io
+docker_add_user_to_group: true
+
+# Extra packages (override in host_vars for per-machine customization)
+extra_packages_debian: []
+extra_packages_darwin: []

@@ -1,0 +1,47 @@
+".config/oh-my-zsh":
+  type: git-repo
+  url: "https://github.com/ohmyzsh/ohmyzsh.git"
+  refreshPeriod: 168h
+  clone:
+    args:
+      - "--depth"
+      - "1"
+  pull:
+    args:
+      - "--ff-only"
+
+".config/oh-my-zsh/custom/plugins/zsh-autosuggestions":
+  type: git-repo
+  url: "https://github.com/zsh-users/zsh-autosuggestions.git"
+  refreshPeriod: 168h
+  clone:
+    args:
+      - "--depth"
+      - "1"
+  pull:
+    args:
+      - "--ff-only"
+
+".config/oh-my-zsh/custom/plugins/F-Sy-H":
+  type: git-repo
+  url: "https://github.com/z-shell/F-Sy-H.git"
+  refreshPeriod: 168h
+  clone:
+    args:
+      - "--depth"
+      - "1"
+  pull:
+    args:
+      - "--ff-only"
+
+".config/oh-my-zsh/custom/themes/powerlevel10k":
+  type: git-repo
+  url: "https://github.com/romkatv/powerlevel10k.git"
+  refreshPeriod: 168h
+  clone:
+    args:
+      - "--depth"
+      - "1"
+  pull:
+    args:
+      - "--ff-only"

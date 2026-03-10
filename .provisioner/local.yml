@@ -1,0 +1,33 @@
+---
+- name: Provision workstation
+  hosts: localhost
+  connection: local
+
+  pre_tasks:
+    - name: Validate supported platform
+      ansible.builtin.assert:
+        that:
+          - ansible_os_family in ["Debian", "Darwin"]
+        fail_msg: "Unsupported OS family: {{ ansible_os_family }}. Only Debian/Ubuntu and macOS are supported."
+      tags:
+        - always
+
+  roles:
+    - role: common
+      tags:
+        - common
+    - role: security
+      tags:
+        - security
+    - role: docker
+      tags:
+        - docker
+    - role: shell
+      tags:
+        - shell
+    - role: python
+      tags:
+        - python
+    - role: fonts
+      tags:
+        - fonts

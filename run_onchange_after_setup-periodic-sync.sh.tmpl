@@ -1,0 +1,89 @@
+#!/bin/bash
+# chezmoi:template:left-delimiter="{{" right-delimiter="}}"
+#
+# Set up periodic chezmoi update (systemd timer on Linux, launchd on macOS).
+# Replaces the old autopull Ansible role.
+set -euo pipefail
+
+CHEZMOI_BIN="$(command -v chezmoi || echo "$HOME/bin/chezmoi")"
+
+{{ if eq .chezmoi.os "linux" -}}
+# --- Linux: systemd user timer ---
+echo "==> Setting up systemd timer for periodic chezmoi update..."
+
+mkdir -p "$HOME/.config/systemd/user"
+
+cat > "$HOME/.config/systemd/user/chezmoi-update.service" <<UNIT
+[Unit]
+Description=chezmoi update
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=$CHEZMOI_BIN update --no-tty
+StandardOutput=journal
+StandardError=journal
+UNIT
+
+cat > "$HOME/.config/systemd/user/chezmoi-update.timer" <<UNIT
+[Unit]
+Description=Run chezmoi update daily
+
+[Timer]
+OnCalendar=daily
+RandomizedDelaySec=3600
+Persistent=true
+
+[Install]
+WantedBy=timers.target
+UNIT
+
+systemctl --user daemon-reload
+systemctl --user enable --now chezmoi-update.timer
+
+echo "==> systemd timer enabled. Check with: systemctl --user status chezmoi-update.timer"
+
+{{ else if eq .chezmoi.os "darwin" -}}
+# --- macOS: launchd user agent ---
+echo "==> Setting up launchd agent for periodic chezmoi update..."
+
+PLIST_DIR="$HOME/Library/LaunchAgents"
+PLIST_PATH="$PLIST_DIR/com.chezmoi.update.plist"
+mkdir -p "$PLIST_DIR"
+
+cat > "$PLIST_PATH" <<PLIST
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.chezmoi.update</string>
+    <key>ProgramArguments</key>
+    <array>
+        <string>$CHEZMOI_BIN</string>
+        <string>update</string>
+        <string>--no-tty</string>
+    </array>
+    <key>StartCalendarInterval</key>
+    <dict>
+        <key>Hour</key>
+        <integer>8</integer>
+        <key>Minute</key>
+        <integer>0</integer>
+    </dict>
+    <key>StandardOutPath</key>
+    <string>/tmp/chezmoi-update.log</string>
+    <key>StandardErrorPath</key>
+    <string>/tmp/chezmoi-update.err</string>
+</dict>
+</plist>
+PLIST
+
+# Unload first in case it was previously loaded
+launchctl unload "$PLIST_PATH" 2>/dev/null || true
+launchctl load "$PLIST_PATH"
+
+echo "==> launchd agent loaded. Check with: launchctl list | grep chezmoi"
+
+{{ end -}}

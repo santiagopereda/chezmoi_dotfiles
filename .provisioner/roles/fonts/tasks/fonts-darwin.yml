@@ -1,0 +1,8 @@
+---
+- name: Install {{ nerd_font_name }} Nerd Font via Homebrew cask
+  community.general.homebrew_cask:
+    name: "{{ nerd_font_cask }}"
+    state: present
+  become: false
+  tags:
+    - fonts

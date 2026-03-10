@@ -1,0 +1,12 @@
+---
+# Per-host overrides - copy to localhost.yml and customize
+#
+# desktop_user: myuser
+# python_versions:
+#   - "3.13"
+#   - "3.12"
+# extra_packages_debian:
+#   - htop
+#   - strace
+# extra_packages_darwin:
+#   - htop

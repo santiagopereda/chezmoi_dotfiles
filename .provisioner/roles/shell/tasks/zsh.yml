@@ -1,0 +1,21 @@
+---
+- name: Get path to zsh
+  ansible.builtin.command: which zsh
+  register: zsh_path
+  changed_when: false
+  tags:
+    - shell
+
+- name: Ensure zsh is in allowed shells
+  ansible.builtin.lineinfile:
+    path: /etc/shells
+    line: "{{ zsh_path.stdout }}"
+  tags:
+    - shell
+
+- name: Set zsh as default shell for {{ desktop_user }}
+  ansible.builtin.user:
+    name: "{{ desktop_user }}"
+    shell: "{{ zsh_path.stdout }}"
+  tags:
+    - shell

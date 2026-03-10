@@ -1,0 +1,6 @@
+---
+- name: rebuild font cache
+  ansible.builtin.command:
+    cmd: fc-cache -fv
+  become: true
+  become_user: "{{ desktop_user }}"

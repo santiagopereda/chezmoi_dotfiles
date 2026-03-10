@@ -1,0 +1,27 @@
+---
+- name: Harden SSH configuration (Linux)
+  ansible.builtin.template:
+    src: sshd_config.j2
+    dest: /etc/ssh/sshd_config.d/99-hardening.conf
+    owner: root
+    group: root
+    mode: "0644"
+    validate: "sshd -t -f %s"
+  when: ansible_os_family == "Debian"
+  notify: restart sshd
+  tags:
+    - security
+    - ssh
+
+- name: Harden SSH configuration (macOS)
+  ansible.builtin.template:
+    src: sshd_config.j2
+    dest: /etc/ssh/sshd_config.d/99-hardening.conf
+    owner: root
+    group: wheel
+    mode: "0644"
+  when: ansible_os_family == "Darwin"
+  notify: restart sshd macos
+  tags:
+    - security
+    - ssh

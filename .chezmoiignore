@@ -1,0 +1,7 @@
+.provisioner
+.provisioner/**
+.chezmoifiles
+.chezmoifiles/**
+README.md
+LICENSE
+.ansible-lint

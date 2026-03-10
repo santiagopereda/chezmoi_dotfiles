@@ -1,0 +1,14 @@
+---
+- name: Install packages (Debian/Ubuntu)
+  ansible.builtin.import_tasks: packages-debian.yml
+  when: ansible_os_family == "Debian"
+  tags:
+    - common
+    - packages
+
+- name: Install packages (macOS)
+  ansible.builtin.import_tasks: packages-darwin.yml
+  when: ansible_os_family == "Darwin"
+  tags:
+    - common
+    - packages

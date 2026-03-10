@@ -1,0 +1,21 @@
+---
+- name: Install uv via official installer
+  ansible.builtin.shell:
+    cmd: curl -LsSf https://astral.sh/uv/install.sh | sh
+    creates: "{{ desktop_home }}/.local/bin/uv"
+  become: true
+  become_user: "{{ desktop_user }}"
+  tags:
+    - python
+    - uv
+
+- name: Update uv to latest version
+  ansible.builtin.command:
+    cmd: "{{ desktop_home }}/.local/bin/uv self update"
+  become: true
+  become_user: "{{ desktop_user }}"
+  register: uv_update
+  changed_when: "'Updated' in uv_update.stdout"
+  tags:
+    - python
+    - uv

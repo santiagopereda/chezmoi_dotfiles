@@ -1,0 +1,17 @@
+#!/bin/bash
+# chezmoi:template:left-delimiter="{{" right-delimiter="}}"
+#
+# Copy custom oh-my-zsh files into the externally-managed oh-my-zsh directory.
+# chezmoi externals and source dirs can't overlap, so we use this script.
+set -euo pipefail
+
+# -- Change detection --
+# aliases.zsh: {{ include ".chezmoifiles/aliases.zsh" | sha256sum }}
+
+OMZ_CUSTOM="$HOME/.config/oh-my-zsh/custom"
+mkdir -p "$OMZ_CUSTOM"
+
+cat > "$OMZ_CUSTOM/aliases.zsh" << 'ALIASES'
+{{ include ".chezmoifiles/aliases.zsh" }}ALIASES
+
+echo "==> Copied aliases.zsh to $OMZ_CUSTOM/"

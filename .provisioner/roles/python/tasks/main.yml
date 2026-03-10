@@ -1,0 +1,11 @@
+---
+- name: Install uv
+  ansible.builtin.import_tasks: uv.yml
+  tags:
+    - python
+    - uv
+
+- name: Install Python versions
+  ansible.builtin.import_tasks: python-versions.yml
+  tags:
+    - python

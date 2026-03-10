@@ -1,0 +1,56 @@
+#!/bin/bash
+# chezmoi:template:left-delimiter="{{" right-delimiter="}}"
+#
+# Install Ansible and required collections (runs once on first init)
+set -euo pipefail
+
+echo "==> Installing Ansible..."
+
+{{ if eq .chezmoi.os "linux" -}}
+# --- Linux (Debian/Ubuntu) ---
+sudo apt-get update -qq
+sudo apt-get install -y -qq git python3 python3-venv pipx
+
+# Ensure pipx bin dir is on PATH
+export PATH="$HOME/.local/bin:$PATH"
+pipx ensurepath
+
+# Install Ansible via pipx
+if ! command -v ansible >/dev/null 2>&1; then
+    pipx install --include-deps ansible
+fi
+
+{{ else if eq .chezmoi.os "darwin" -}}
+# --- macOS ---
+# Install Xcode Command Line Tools if needed
+if ! xcode-select -p &>/dev/null; then
+    echo "==> Installing Xcode Command Line Tools..."
+    xcode-select --install
+    echo "Waiting for Xcode CLT installation to complete..."
+    until xcode-select -p &>/dev/null; do
+        sleep 5
+    done
+fi
+
+# Install Homebrew if needed
+if ! command -v brew >/dev/null 2>&1; then
+    echo "==> Installing Homebrew..."
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+fi
+
+# Install Ansible via Homebrew
+if ! command -v ansible >/dev/null 2>&1; then
+    brew install ansible
+fi
+
+{{ end -}}
+
+# Install required Ansible collections
+CHEZMOI_SOURCE="{{ .chezmoi.sourceDir }}"
+if [ -f "$CHEZMOI_SOURCE/.provisioner/requirements.yml" ]; then
+    echo "==> Installing Ansible Galaxy collections..."
+    ansible-galaxy collection install -r "$CHEZMOI_SOURCE/.provisioner/requirements.yml"
+fi
+
+echo "==> Ansible installation complete."

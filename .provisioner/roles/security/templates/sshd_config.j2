@@ -1,0 +1,7 @@
+# Managed by Ansible — do not edit manually
+Port {{ security_ssh_port }}
+PermitRootLogin {{ security_ssh_permit_root_login }}
+PasswordAuthentication {{ security_ssh_password_authentication }}
+AllowUsers {{ security_ssh_allowed_users }}
+X11Forwarding no
+MaxAuthTries 3
