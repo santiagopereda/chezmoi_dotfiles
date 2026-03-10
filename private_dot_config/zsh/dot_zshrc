@@ -91,7 +91,7 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git sudo web-search copypath copyfile copybuffer dirhistory history jsontools zsh-autosuggestions zsh-syntax-highlighting F-Sy-H)
+plugins=(git sudo web-search copypath copyfile copybuffer dirhistory history jsontools zsh-autosuggestions F-Sy-H)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -146,11 +146,12 @@ compinit -d ~/.cache/zsh/zcompdump-$ZSH_VERSION
 # load direnv
 eval "$(direnv hook zsh)"
 
-# load pyenv
-export PYENV_ROOT="$HOME/.config/pyenv"
-command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init -)"
-eval "$(pyenv virtualenv-init -)"
+# load pyenv (if installed)
+if command -v pyenv &>/dev/null; then
+  export PYENV_ROOT="$HOME/.config/pyenv"
+  eval "$(pyenv init -)"
+  eval "$(pyenv virtualenv-init -)"
+fi
 
 # pip requires virtual environment
 gpip(){
