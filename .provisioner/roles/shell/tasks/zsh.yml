@@ -10,6 +10,7 @@
   ansible.builtin.lineinfile:
     path: /etc/shells
     line: "{{ zsh_path.stdout }}"
+  become: true
   tags:
     - shell
 
@@ -17,5 +18,6 @@
   ansible.builtin.user:
     name: "{{ desktop_user }}"
     shell: "{{ zsh_path.stdout }}"
+  become: true
   tags:
     - shell

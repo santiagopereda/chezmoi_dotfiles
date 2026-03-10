@@ -3,6 +3,7 @@
   ansible.builtin.stat:
     path: /opt/homebrew/bin/brew
   register: homebrew_check
+  become: true
   tags:
     - common
     - packages

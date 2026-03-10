@@ -2,6 +2,7 @@
 - name: Validate sshd configuration
   ansible.builtin.command: sshd -t
   changed_when: false
+  become: true
   listen: restart sshd
 
 - name: Restart sshd service
@@ -9,18 +10,22 @@
     name: sshd
     state: restarted
     enabled: true
+  become: true
   listen: restart sshd
 
 - name: restart sshd macos
   ansible.builtin.command:
     cmd: launchctl kickstart -k system/com.openssh.sshd
+  become: true
 
 - name: restart fail2ban
   ansible.builtin.systemd:
     name: fail2ban
     state: restarted
     enabled: true
+  become: true
 
 - name: reload ufw
   community.general.ufw:
     state: reloaded
+  become: true

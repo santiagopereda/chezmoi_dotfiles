@@ -4,6 +4,7 @@
   register: sshd_include_check
   changed_when: false
   failed_when: false
+  become: true
   when: ansible_os_family == "Debian"
 
 - name: Fail if sshd_config does not support Include
@@ -30,6 +31,7 @@
     owner: root
     group: root
     mode: "0644"
+  become: true
   when: ansible_os_family == "Debian"
   notify: restart sshd
   tags:
@@ -43,6 +45,7 @@
     owner: root
     group: wheel
     mode: "0644"
+  become: true
   when: ansible_os_family == "Darwin"
   notify: restart sshd macos
   tags:

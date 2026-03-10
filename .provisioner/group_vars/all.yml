@@ -1,7 +1,7 @@
 ---
 # User configuration
 desktop_user: "{{ ansible_user_id }}"
-desktop_home: "{{ ansible_facts.user_dir | default('~' + desktop_user) }}"
+desktop_home: "{{ lookup('env', 'HOME') }}"
 
 # Python versions to install via uv
 python_versions:

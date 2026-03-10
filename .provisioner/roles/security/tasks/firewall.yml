@@ -3,6 +3,7 @@
   ansible.builtin.apt:
     name: ufw
     state: present
+  become: true
   tags:
     - security
     - firewall
@@ -11,6 +12,7 @@
   community.general.ufw:
     direction: incoming
     default: deny
+  become: true
   notify: reload ufw
   tags:
     - security
@@ -20,6 +22,7 @@
   community.general.ufw:
     direction: outgoing
     default: allow
+  become: true
   notify: reload ufw
   tags:
     - security
@@ -30,6 +33,7 @@
     rule: allow
     port: "{{ security_ssh_port | string }}"
     proto: tcp
+  become: true
   notify: reload ufw
   tags:
     - security
@@ -38,6 +42,7 @@
 - name: Enable ufw
   community.general.ufw:
     state: enabled
+  become: true
   tags:
     - security
     - firewall

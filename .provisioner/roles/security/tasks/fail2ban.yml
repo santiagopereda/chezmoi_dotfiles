@@ -3,6 +3,7 @@
   ansible.builtin.apt:
     name: fail2ban
     state: present
+  become: true
   tags:
     - security
     - fail2ban
@@ -14,6 +15,7 @@
     owner: root
     group: root
     mode: "0644"
+  become: true
   notify: restart fail2ban
   tags:
     - security
@@ -24,6 +26,7 @@
     name: fail2ban
     enabled: true
     state: started
+  become: true
   tags:
     - security
     - fail2ban
