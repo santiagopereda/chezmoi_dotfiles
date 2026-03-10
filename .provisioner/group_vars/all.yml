@@ -53,6 +53,13 @@ docker_packages_debian:
   - containerd.io
 docker_add_user_to_group: true
 
+# Security / SSH hardening / fail2ban
+security_ssh_max_auth_tries: 6
+security_fail2ban_maxretry: 5
+security_fail2ban_ignoreip:
+  - 127.0.0.1/8
+  - "::1"
+
 # Extra packages (override in host_vars for per-machine customization)
 extra_packages_debian: []
 extra_packages_darwin: []

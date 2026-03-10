@@ -10,3 +10,9 @@
 #   - strace
 # extra_packages_darwin:
 #   - htop
+# security_ssh_max_auth_tries: 6
+# security_fail2ban_maxretry: 5
+# security_fail2ban_ignoreip:
+#   - 127.0.0.1/8
+#   - "::1"
+#   - 192.168.1.0/24  # LAN subnet

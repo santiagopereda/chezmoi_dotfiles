@@ -1,8 +1,10 @@
 # Managed by Ansible — do not edit manually
 [DEFAULT]
-bantime = 1h
-findtime = 10m
-maxretry = 3
+bantime = {{ security_fail2ban_bantime }}
+findtime = {{ security_fail2ban_findtime }}
+maxretry = {{ security_fail2ban_maxretry }}
+ignoreip = {{ security_fail2ban_ignoreip | join(' ') }}
+backend = {{ security_fail2ban_backend }}
 
 [sshd]
 enabled = true

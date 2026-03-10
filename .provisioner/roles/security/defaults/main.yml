@@ -1,6 +1,19 @@
 ---
 # SSH hardening
 security_ssh_port: 22
+security_ssh_max_auth_tries: 6
 security_ssh_permit_root_login: "no"
 security_ssh_password_authentication: "no"
+security_ssh_challenge_response_authentication: "no"
+security_ssh_pubkey_authentication: "yes"
+security_ssh_use_pam: "yes"
 security_ssh_allowed_users: "{{ desktop_user }}"
+
+# fail2ban
+security_fail2ban_bantime: 600
+security_fail2ban_findtime: 600
+security_fail2ban_maxretry: 5
+security_fail2ban_ignoreip:
+  - 127.0.0.1/8
+  - "::1"
+security_fail2ban_backend: auto
