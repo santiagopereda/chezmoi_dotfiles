@@ -21,6 +21,7 @@ PROVISIONER_DIR="$CHEZMOI_SOURCE/.provisioner"
 echo "==> Running Ansible provisioner..."
 
 export PATH="$HOME/.local/bin:$PATH"
+mkdir -p "$HOME/.local/state/chezmoi"
 
 ANSIBLE_CONFIG="$PROVISIONER_DIR/ansible.cfg" \
   ansible-playbook "$PROVISIONER_DIR/local.yml" \
