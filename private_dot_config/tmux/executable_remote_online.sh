@@ -1,18 +1,10 @@
-#!/bin/zsh
+#!/bin/sh
+# Show latency to active SSH target, or nothing if no session
+# Detect SSH connections via ss (socket stats) — reliable, no grep-on-ps fragility
+remote=$(ss -tnH state established '( dport = 22 )' 2>/dev/null \
+  | awk '{split($4,a,":"); print a[1]}' | head -1)
 
-IP="$(ps -af | grep 'ssh' | cut -d '@' -f2 | head -n 1)" # Replace with the IP address you want to ping
-COUNT=1 # Number of ping attempts
+[ -z "$remote" ] && exit 0
 
-speed=$(tail -1 /tmp/lighthouse.txt)
-
-if [ $speed ]; then
-    ping_output="󰢹 $speed ms"
-    rm /tmp/lighthouse.txt
-else
-    touch /tmp/lighthouse.txt
-    ping_output=""
-fi
-echo "$ping_output"
-
-
-ping $IP -c 10 | tail -1 | cut -d "/" -f5 >> /tmp/lighthouse.txt
+ping -c 1 -W 1 "$remote" 2>/dev/null \
+  | awk -F'[=/]' '/time=/{printf "󰢹 %.0f ms", $6}'

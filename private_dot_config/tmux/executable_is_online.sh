@@ -1,18 +1,4 @@
-#!/bin/zsh
-
-IP="google.com" # Replace with the IP address you want to ping
-COUNT=1 # Number of ping attempts
-
-speed=$(tail -1 /tmp/ping.txt)
-
-if [ $speed ]; then
-    ping_output="󰨀 $speed ms"
-    rm /tmp/ping.txt
-else
-    touch /tmp/ping.txt
-    ping_output="󱍢"
-fi
-echo "$ping_output"
-
-
-ping www.google.com -c 1 | tail -1 | cut -d "/" -f5 >> /tmp/ping.txt
+#!/bin/sh
+# Show internet latency or offline icon
+ping -c 1 -W 1 google.com 2>/dev/null \
+  | awk -F'time=' '/time=/{printf "󰨀 %.0f ms", $2; found=1} END{if(!found) printf "󱍢"}'
