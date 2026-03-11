@@ -7,4 +7,4 @@ remote=$(ss -tnH state established '( dport = 22 )' 2>/dev/null \
 [ -z "$remote" ] && exit 0
 
 ping -c 1 -W 1 "$remote" 2>/dev/null \
-  | awk -F'[=/]' '/time=/{printf "󰢹 %.0f ms", $6}'
+  | awk -F'time=' '/time=/{printf "󰢹 %.0f ms", $2}'

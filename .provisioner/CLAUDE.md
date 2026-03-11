@@ -15,8 +15,10 @@ Chezmoi triggers Ansible via `run_onchange_after_ansible-provision.sh.tmpl`. Tha
 ## Bootstrapping a New Machine
 
 ```bash
-sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply santiagopereda/chezmoi_dotfiles
+sh -c "$(curl -fsLS get.chezmoi.io)" -- -b ~/.local/bin init --apply santiagopereda/chezmoi_dotfiles
 ```
+
+The `-b ~/.local/bin` flag persists the binary so `chezmoi` is available after the initial run. Without it, the installer uses a temp directory and the binary is lost.
 
 Do NOT use `snap install chezmoi` — the sandbox prevents dotfile management.
 
@@ -24,7 +26,7 @@ Do NOT use `snap install chezmoi` — the sandbox prevents dotfile management.
 ```bash
 while sudo fuser /var/lib/dpkg/lock-frontend >/dev/null 2>&1; do echo "waiting..."; sleep 5; done
 ```
-Then re-run: `chezmoi init --apply santiagopereda/chezmoi_dotfiles`
+Then re-run: `~/.local/bin/chezmoi init --apply santiagopereda/chezmoi_dotfiles`
 
 After init, create per-machine overrides:
 ```bash
@@ -39,10 +41,10 @@ SSH into the machine and run:
 chezmoi update
 ```
 
-If chezmoi isn't in PATH (e.g., fresh Pi), install it first:
+If chezmoi isn't in PATH, ensure `~/.local/bin` is on PATH (should be set by `.zshenv`):
 ```bash
-sh -c 'curl -fsLS get.chezmoi.io | sh -s -- -b ~/.local/bin'
-~/.local/bin/chezmoi update
+export PATH="$HOME/.local/bin:$PATH"
+chezmoi update
 ```
 
 ## Structure
