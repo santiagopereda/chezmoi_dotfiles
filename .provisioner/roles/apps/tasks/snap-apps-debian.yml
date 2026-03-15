@@ -1,0 +1,10 @@
+---
+- name: Install desktop apps via snap
+  community.general.snap:
+    name: "{{ item.name }}"
+    classic: "{{ item.classic | default(false) }}"
+    state: present
+  become: true
+  loop: "{{ apps_snap_packages_debian }}"
+  tags:
+    - apps

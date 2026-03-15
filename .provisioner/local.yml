@@ -31,6 +31,9 @@
     - role: node
       tags:
         - node
+    - role: apps
+      tags:
+        - apps
     - role: fonts
       tags:
         - fonts

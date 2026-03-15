@@ -1,0 +1,7 @@
+---
+- name: Install desktop apps via Homebrew casks
+  community.general.homebrew_cask:
+    name: "{{ apps_cask_packages_darwin }}"
+    state: present
+  tags:
+    - apps

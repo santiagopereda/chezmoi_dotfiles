@@ -1,0 +1,113 @@
+---
+# Brave Browser
+- name: Add Brave GPG key
+  ansible.builtin.get_url:
+    url: https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg
+    dest: "{{ apps_brave_apt_key_path }}"
+    mode: "0644"
+  become: true
+  tags:
+    - apps
+
+- name: Add Brave apt repository
+  ansible.builtin.apt_repository:
+    repo: >-
+      deb [arch={{ ansible_architecture | regex_replace('x86_64', 'amd64') | regex_replace('aarch64', 'arm64') }}
+      signed-by={{ apps_brave_apt_key_path }}]
+      https://brave-browser-apt-release.s3.brave.com/
+      stable main
+    state: present
+    filename: brave-browser
+  become: true
+  tags:
+    - apps
+
+# 1Password
+- name: Add 1Password GPG key
+  ansible.builtin.get_url:
+    url: https://downloads.1password.com/linux/keys/1password.asc
+    dest: "{{ apps_1password_apt_key_path }}"
+    mode: "0644"
+  become: true
+  tags:
+    - apps
+
+- name: Add 1Password apt repository
+  ansible.builtin.apt_repository:
+    repo: >-
+      deb [arch={{ ansible_architecture | regex_replace('x86_64', 'amd64') | regex_replace('aarch64', 'arm64') }}
+      signed-by={{ apps_1password_apt_key_path }}]
+      https://downloads.1password.com/linux/debian/{{ ansible_architecture | regex_replace('x86_64', 'amd64') | regex_replace('aarch64', 'arm64') }}
+      stable main
+    state: present
+    filename: 1password
+  become: true
+  tags:
+    - apps
+
+# Spotify
+- name: Add Spotify GPG key
+  ansible.builtin.get_url:
+    url: https://download.spotify.com/debian/pubkey_C85668DF69375001.gpg
+    dest: "{{ apps_spotify_apt_key_path }}"
+    mode: "0644"
+  become: true
+  tags:
+    - apps
+
+- name: Add Spotify apt repository
+  ansible.builtin.apt_repository:
+    repo: >-
+      deb [signed-by={{ apps_spotify_apt_key_path }}]
+      http://repository.spotify.com
+      stable non-free
+    state: present
+    filename: spotify
+  become: true
+  tags:
+    - apps
+
+# Tailscale
+- name: Add Tailscale GPG key
+  ansible.builtin.get_url:
+    url: https://pkgs.tailscale.com/stable/{{ ansible_distribution | lower }}/{{ ansible_distribution_release }}.noarmor.gpg
+    dest: "{{ apps_tailscale_apt_key_path }}"
+    mode: "0644"
+  become: true
+  tags:
+    - apps
+
+- name: Add Tailscale apt repository
+  ansible.builtin.apt_repository:
+    repo: >-
+      deb [signed-by={{ apps_tailscale_apt_key_path }}]
+      https://pkgs.tailscale.com/stable/{{ ansible_distribution | lower }}
+      {{ ansible_distribution_release }} main
+    state: present
+    filename: tailscale
+  become: true
+  tags:
+    - apps
+
+# LibreWolf
+- name: Add LibreWolf GPG key
+  ansible.builtin.get_url:
+    url: https://deb.librewolf.net/keyring.gpg
+    dest: "{{ apps_librewolf_apt_key_path }}"
+    mode: "0644"
+  become: true
+  tags:
+    - apps
+
+- name: Add LibreWolf apt repository
+  ansible.builtin.apt_repository:
+    repo: >-
+      deb [arch={{ ansible_architecture | regex_replace('x86_64', 'amd64') | regex_replace('aarch64', 'arm64') }}
+      signed-by={{ apps_librewolf_apt_key_path }}]
+      https://deb.librewolf.net
+      {{ ansible_distribution_release }} main
+    state: present
+    filename: librewolf
+  become: true
+  tags:
+    - apps

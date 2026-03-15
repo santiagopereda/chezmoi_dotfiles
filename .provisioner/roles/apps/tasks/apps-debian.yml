@@ -1,0 +1,20 @@
+---
+- name: Import external apt repository setup
+  ansible.builtin.import_tasks: repos-debian.yml
+  tags:
+    - apps
+
+- name: Import apt package installs
+  ansible.builtin.import_tasks: apt-apps-debian.yml
+  tags:
+    - apps
+
+- name: Import snap package installs
+  ansible.builtin.import_tasks: snap-apps-debian.yml
+  tags:
+    - apps
+
+- name: Import Obsidian install
+  ansible.builtin.import_tasks: obsidian-debian.yml
+  tags:
+    - apps

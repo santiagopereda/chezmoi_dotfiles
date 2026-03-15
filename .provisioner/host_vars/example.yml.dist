@@ -16,3 +16,14 @@
 #   - 127.0.0.1/8
 #   - "::1"
 #   - 192.168.1.0/24  # LAN subnet
+#
+# Desktop apps overrides
+# apps_apt_packages_debian:
+#   - vlc
+#   - flameshot
+# apps_snap_packages_debian:
+#   - { name: code, classic: true }
+# apps_cask_packages_darwin:
+#   - brave-browser
+#   - visual-studio-code
+# obsidian_version: "1.7.7"

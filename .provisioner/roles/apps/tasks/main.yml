@@ -1,0 +1,12 @@
+---
+- name: Import Debian desktop apps tasks
+  ansible.builtin.import_tasks: apps-debian.yml
+  when: ansible_os_family == "Debian"
+  tags:
+    - apps
+
+- name: Import macOS desktop apps tasks
+  ansible.builtin.import_tasks: apps-darwin.yml
+  when: ansible_os_family == "Darwin"
+  tags:
+    - apps

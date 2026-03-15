@@ -90,6 +90,42 @@ security_fail2ban_ignoreip:
   - 127.0.0.1/8
   - "::1"
 
+# Desktop apps - apt packages (Debian/Ubuntu)
+apps_apt_packages_debian:
+  - vlc
+  - obs-studio
+  - remmina
+  - flameshot
+
+# Desktop apps - snap packages (Debian/Ubuntu)
+apps_snap_packages_debian:
+  - { name: bitwarden }
+  - { name: code, classic: true }
+  - { name: dbeaver-ce }
+  - { name: postman }
+  - { name: drawio }
+  - { name: localsend }
+
+# Desktop apps - Homebrew casks (macOS)
+apps_cask_packages_darwin:
+  - brave-browser
+  - 1password
+  - bitwarden
+  - visual-studio-code
+  - librewolf
+  - spotify
+  - vlc
+  - obs
+  - obsidian
+  - dbeaver-community
+  - postman
+  - drawio
+  - localsend
+  - flameshot
+
+# Obsidian version (GitHub .deb for Debian)
+obsidian_version: "1.7.7"
+
 # Extra packages (override in host_vars for per-machine customization)
 extra_packages_debian: []
 extra_packages_darwin: []

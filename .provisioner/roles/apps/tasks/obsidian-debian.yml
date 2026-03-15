@@ -1,0 +1,31 @@
+---
+- name: Check if Obsidian is installed
+  ansible.builtin.command:
+    cmd: dpkg-query -W -f='${Version}' obsidian
+  register: obsidian_installed
+  changed_when: false
+  failed_when: false
+  tags:
+    - apps
+
+- name: Download Obsidian .deb
+  ansible.builtin.get_url:
+    url: "https://github.com/obsidianmd/obsidian-releases/releases/download/v{{ obsidian_version }}/obsidian_{{ obsidian_version }}_amd64.deb"
+    dest: "/tmp/obsidian_{{ obsidian_version }}_amd64.deb"
+    mode: "0644"
+  when:
+    - ansible_architecture == "x86_64"
+    - obsidian_installed.rc != 0 or obsidian_installed.stdout != obsidian_version
+  tags:
+    - apps
+
+- name: Install Obsidian .deb
+  ansible.builtin.apt:
+    deb: "/tmp/obsidian_{{ obsidian_version }}_amd64.deb"
+    state: present
+  become: true
+  when:
+    - ansible_architecture == "x86_64"
+    - obsidian_installed.rc != 0 or obsidian_installed.stdout != obsidian_version
+  tags:
+    - apps

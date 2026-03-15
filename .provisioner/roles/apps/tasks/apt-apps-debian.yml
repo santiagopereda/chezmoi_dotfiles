@@ -1,0 +1,11 @@
+---
+- name: Install desktop apps via apt
+  ansible.builtin.apt:
+    name: >-
+      {{ apps_apt_packages_debian +
+         ['brave-browser', '1password', 'spotify-client', 'tailscale', 'librewolf'] }}
+    state: present
+    update_cache: true
+  become: true
+  tags:
+    - apps
