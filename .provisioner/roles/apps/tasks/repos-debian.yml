@@ -22,12 +22,11 @@
   tags:
     - apps
 
-# 1Password
+# 1Password (key is ASCII-armored, must dearmor)
 - name: Add 1Password GPG key
-  ansible.builtin.get_url:
-    url: https://downloads.1password.com/linux/keys/1password.asc
-    dest: "{{ apps_1password_apt_key_path }}"
-    mode: "0644"
+  ansible.builtin.shell:
+    cmd: curl -fsSL https://downloads.1password.com/linux/keys/1password.asc | gpg --dearmor -o {{ apps_1password_apt_key_path }}
+    creates: "{{ apps_1password_apt_key_path }}"
   become: true
   tags:
     - apps
@@ -45,12 +44,11 @@
   tags:
     - apps
 
-# Spotify
+# Spotify (key is ASCII-armored despite .gpg extension, must dearmor)
 - name: Add Spotify GPG key
-  ansible.builtin.get_url:
-    url: https://download.spotify.com/debian/pubkey_C85668DF69375001.gpg
-    dest: "{{ apps_spotify_apt_key_path }}"
-    mode: "0644"
+  ansible.builtin.shell:
+    cmd: curl -fsSL https://download.spotify.com/debian/pubkey_C85668DF69375001.gpg | gpg --dearmor -o {{ apps_spotify_apt_key_path }}
+    creates: "{{ apps_spotify_apt_key_path }}"
   become: true
   tags:
     - apps
@@ -89,25 +87,20 @@
   tags:
     - apps
 
-# LibreWolf
-- name: Add LibreWolf GPG key
-  ansible.builtin.get_url:
-    url: https://deb.librewolf.net/keyring.gpg
-    dest: "{{ apps_librewolf_apt_key_path }}"
-    mode: "0644"
+# LibreWolf (uses extrepo)
+- name: Install extrepo for LibreWolf
+  ansible.builtin.apt:
+    name: extrepo
+    state: present
   become: true
   tags:
     - apps
 
-- name: Add LibreWolf apt repository
-  ansible.builtin.apt_repository:
-    repo: >-
-      deb [arch={{ ansible_facts['architecture'] | regex_replace('x86_64', 'amd64') | regex_replace('aarch64', 'arm64') }}
-      signed-by={{ apps_librewolf_apt_key_path }}]
-      https://deb.librewolf.net
-      {{ ansible_facts['distribution_release'] }} main
-    state: present
-    filename: librewolf
+- name: Enable LibreWolf repository via extrepo
+  ansible.builtin.command:
+    cmd: extrepo enable librewolf
   become: true
+  register: librewolf_extrepo
+  changed_when: "'already enabled' not in librewolf_extrepo.stderr | default('')"
   tags:
     - apps
