@@ -1,4 +1,13 @@
 ---
+- name: Install tealdeer (tldr)
+  ansible.builtin.get_url:
+    url: "https://github.com/tealdeer-rs/tealdeer/releases/latest/download/tealdeer-linux-{{ ansible_architecture | regex_replace('x86_64', 'x86_64') | regex_replace('aarch64', 'aarch64') }}-musl"
+    dest: "{{ desktop_home }}/.local/bin/tldr"
+    mode: "0755"
+  tags:
+    - common
+    - tools
+
 - name: Install lazydocker
   ansible.builtin.shell:
     cmd: >

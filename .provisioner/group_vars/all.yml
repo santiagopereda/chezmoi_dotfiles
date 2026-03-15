@@ -43,7 +43,6 @@ common_packages_debian:
   - fd-find
   - bat
   - eza
-  - tldr
   - nmap
   - openjdk-17-jdk
 
