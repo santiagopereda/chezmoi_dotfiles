@@ -10,22 +10,11 @@
     - apps
     - terminals
 
-# Ghostty (external apt repo)
-- name: Add Ghostty PPA
-  ansible.builtin.apt_repository:
-    repo: ppa:mkasberg/ghostty-ubuntu
-    state: present
-  become: true
-  when: install_ghostty | bool
-  tags:
-    - apps
-    - terminals
-
+# Ghostty (via snap — works on all architectures and Ubuntu versions)
 - name: Install Ghostty
-  ansible.builtin.apt:
+  community.general.snap:
     name: ghostty
     state: present
-    update_cache: true
   become: true
   when: install_ghostty | bool
   tags:
