@@ -101,13 +101,13 @@ apps_apt_packages_debian:
 
 # Desktop apps - snap packages (Debian/Ubuntu, all architectures)
 apps_snap_packages_debian:
-  - { name: bitwarden }
-  - { name: dbeaver-ce }
   - { name: postman }
   - { name: localsend }
 
 # Desktop apps - snap packages (amd64 only)
 apps_snap_packages_debian_amd64:
+  - { name: bitwarden }
+  - { name: dbeaver-ce }
   - { name: drawio }
 
 # Desktop apps - Homebrew casks (macOS)

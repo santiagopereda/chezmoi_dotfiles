@@ -1,6 +1,6 @@
 ---
 galaxy_info:
-  description: Install and configure Zsh with oh-my-zsh and plugins
+  description: Install fnm (Fast Node Manager) and Node.js versions
   min_ansible_version: "2.17"
   platforms:
     - name: Ubuntu
