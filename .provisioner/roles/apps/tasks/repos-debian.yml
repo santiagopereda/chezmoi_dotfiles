@@ -1,50 +1,54 @@
 ---
-# Brave Browser
+# Brave Browser (amd64 only)
 - name: Add Brave GPG key
   ansible.builtin.get_url:
     url: https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg
     dest: "{{ apps_brave_apt_key_path }}"
     mode: "0644"
   become: true
+  when: ansible_facts['architecture'] == 'x86_64'
   tags:
     - apps
 
 - name: Add Brave apt repository
   ansible.builtin.apt_repository:
     repo: >-
-      deb [arch={{ ansible_facts['architecture'] | regex_replace('x86_64', 'amd64') | regex_replace('aarch64', 'arm64') }}
+      deb [arch=amd64
       signed-by={{ apps_brave_apt_key_path }}]
       https://brave-browser-apt-release.s3.brave.com/
       stable main
     state: present
     filename: brave-browser
   become: true
+  when: ansible_facts['architecture'] == 'x86_64'
   tags:
     - apps
 
-# 1Password (key is ASCII-armored, must dearmor)
+# 1Password (amd64 only, key is ASCII-armored)
 - name: Add 1Password GPG key
   ansible.builtin.shell:
     cmd: curl -fsSL https://downloads.1password.com/linux/keys/1password.asc | gpg --dearmor --yes -o {{ apps_1password_apt_key_path }}
   become: true
   changed_when: false
+  when: ansible_facts['architecture'] == 'x86_64'
   tags:
     - apps
 
 - name: Add 1Password apt repository
   ansible.builtin.apt_repository:
     repo: >-
-      deb [arch={{ ansible_facts['architecture'] | regex_replace('x86_64', 'amd64') | regex_replace('aarch64', 'arm64') }}
+      deb [arch=amd64
       signed-by={{ apps_1password_apt_key_path }}]
-      https://downloads.1password.com/linux/debian/{{ ansible_facts['architecture'] | regex_replace('x86_64', 'amd64') | regex_replace('aarch64', 'arm64') }}
+      https://downloads.1password.com/linux/debian/amd64
       stable main
     state: present
     filename: 1password
   become: true
+  when: ansible_facts['architecture'] == 'x86_64'
   tags:
     - apps
 
-# Spotify
+# Spotify (amd64 only)
 - name: Add Spotify GPG key
   ansible.builtin.get_url:
     url: https://download.spotify.com/debian/pubkey_5384CE82BA52C83A.gpg
@@ -52,6 +56,7 @@
     mode: "0644"
     force: true
   become: true
+  when: ansible_facts['architecture'] == 'x86_64'
   tags:
     - apps
 
@@ -64,10 +69,11 @@
     state: present
     filename: spotify
   become: true
+  when: ansible_facts['architecture'] == 'x86_64'
   tags:
     - apps
 
-# Tailscale
+# Tailscale (all architectures)
 - name: Add Tailscale GPG key
   ansible.builtin.get_url:
     url: https://pkgs.tailscale.com/stable/{{ ansible_facts['distribution'] | lower }}/{{ ansible_facts['distribution_release'] }}.noarmor.gpg
@@ -89,7 +95,7 @@
   tags:
     - apps
 
-# LibreWolf (uses extrepo)
+# LibreWolf (uses extrepo, all architectures)
 - name: Install extrepo for LibreWolf
   ansible.builtin.apt:
     name: extrepo
