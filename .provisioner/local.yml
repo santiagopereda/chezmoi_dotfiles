@@ -19,11 +19,22 @@
       tags:
         - always
 
-    - name: Remove legacy VS Code repo source (wrong signed-by path)
+    - name: Find apt sources referencing legacy Microsoft GPG key path
+      ansible.builtin.shell:
+        cmd: grep -rl '/usr/share/keyrings/microsoft.gpg' /etc/apt/sources.list.d/ 2>/dev/null || true
+      become: true
+      register: legacy_microsoft_sources
+      changed_when: false
+      when: ansible_facts['os_family'] == "Debian"
+      tags:
+        - always
+
+    - name: Remove apt sources referencing legacy Microsoft GPG key path
       ansible.builtin.file:
-        path: /etc/apt/sources.list.d/packages_microsoft_com_repos_code.list
+        path: "{{ item }}"
         state: absent
       become: true
+      loop: "{{ legacy_microsoft_sources.stdout_lines | default([]) }}"
       when: ansible_facts['os_family'] == "Debian"
       tags:
         - always
