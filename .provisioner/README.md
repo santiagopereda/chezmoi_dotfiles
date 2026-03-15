@@ -127,7 +127,7 @@ Kitty and Ghostty are opt-in via `host_vars/localhost.yml`:
 | Variable | Default | Debian | macOS |
 |---|---|---|---|
 | `install_kitty` | `false` | apt package | Homebrew cask |
-| `install_ghostty` | `false` | PPA (`ppa:ghostty/release`) | Homebrew cask |
+| `install_ghostty` | `false` | PPA (`ppa:mkasberg/ghostty-ubuntu`) | Homebrew cask |
 
 ### Architecture handling
 
