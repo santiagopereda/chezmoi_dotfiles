@@ -25,9 +25,9 @@
 # 1Password (key is ASCII-armored, must dearmor)
 - name: Add 1Password GPG key
   ansible.builtin.shell:
-    cmd: curl -fsSL https://downloads.1password.com/linux/keys/1password.asc | gpg --dearmor -o {{ apps_1password_apt_key_path }}
-    creates: "{{ apps_1password_apt_key_path }}"
+    cmd: curl -fsSL https://downloads.1password.com/linux/keys/1password.asc | gpg --dearmor --yes -o {{ apps_1password_apt_key_path }}
   become: true
+  changed_when: false
   tags:
     - apps
 
@@ -47,9 +47,9 @@
 # Spotify (key is ASCII-armored despite .gpg extension, must dearmor)
 - name: Add Spotify GPG key
   ansible.builtin.shell:
-    cmd: curl -fsSL https://download.spotify.com/debian/pubkey_C85668DF69375001.gpg | gpg --dearmor -o {{ apps_spotify_apt_key_path }}
-    creates: "{{ apps_spotify_apt_key_path }}"
+    cmd: curl -fsSL https://download.spotify.com/debian/pubkey_C85668DF69375001.gpg | gpg --dearmor --yes -o {{ apps_spotify_apt_key_path }}
   become: true
+  changed_when: false
   tags:
     - apps
 
