@@ -6,5 +6,6 @@
     state: present
   become: true
   loop: "{{ apps_snap_packages_debian }}"
+  when: ansible_facts['architecture'] == 'x86_64'
   tags:
     - apps
