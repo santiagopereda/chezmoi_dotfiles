@@ -136,9 +136,14 @@ Debian/Ubuntu and macOS. The security role's fail2ban and firewall tasks are Lin
 - Vi copy mode (`v` select, `y` yank)
 - `escape-time 10` and `focus-events on` for neovim
 - `tmux-256color` with RGB true color override
-- Status bar scripts (`is_online.sh`, `remote_online.sh`, `battery_meter.sh`) have known issues — they use temp files without locking and `battery_meter.sh` fails on machines without batteries
+- Status bar scripts: `is_online.sh` (internet latency), `remote_online.sh` (SSH target latency), `battery_meter.sh` (battery/plug), `cpu_temp.sh` (CPU temperature), `docker_count.sh`, `vpn_indicator.sh`, `weather.sh`
+- All scripts use POSIX sh, no temp files, complete in <1s
+- `cpu_temp.sh` uses fallthrough chain: lm_sensors → vcgencmd → sysfs thermal_zone0
 
 ### Known Gotchas
+- **Nerd Font icons in tmux.conf**: The Write/Edit tools silently drop Private Use Area Unicode characters (U+E000-U+F8FF, U+F0000+). Any edits to tmux.conf must patch Nerd Font icons back using `sed` with `printf '\xNN'` byte sequences. Affected characters: astronaut (U+EDC5), prefix indicators (U+E615/U+E23A), clock (U+F017), calendar (U+F1D8), window separators (U+E0B3/U+E0B1), window icons (U+F489/U+E795), battery plug (U+F1E6)
+- **awk field extraction in ping scripts**: Use `-F'time='` (split on literal `time=`), NOT `-F'[=/]'` which produces variable field counts. The latency value is always `$2` with `-F'time='`
+- **vcgencmd on Pi**: Outputs errors to stdout, not stderr. Always use `grep -o` to extract only the expected pattern, never `cut` without `-s`
 - `aliases.zsh` must end with a newline, otherwise the heredoc in `copy-omz-custom.sh.tmpl` breaks
 - `chezmoi apply` on local machine will overwrite any manual additions to `.zshrc` (e.g., lines added by pipx or cargo). Add those to the template instead.
 - `.chezmoiignore` excludes `.provisioner/` from chezmoi target — Ansible files stay in source only
