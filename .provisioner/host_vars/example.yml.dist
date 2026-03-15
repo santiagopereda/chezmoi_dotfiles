@@ -3,14 +3,24 @@
 #
 # desktop_mode: false  # set to false for headless/server machines
 # desktop_user: myuser
+#
+# Terminal emulators
+# install_kitty: true
+# install_ghostty: true
+#
 # python_versions:
 #   - "3.13"
 #   - "3.12"
+# node_versions:
+#   - "22"
+#   - "20"
 # extra_packages_debian:
 #   - htop
 #   - strace
 # extra_packages_darwin:
 #   - htop
+#
+# Security
 # security_ssh_max_auth_tries: 6
 # security_fail2ban_maxretry: 5
 # security_fail2ban_ignoreip:
