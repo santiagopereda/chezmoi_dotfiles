@@ -21,11 +21,11 @@ sh -c "$(curl -fsLS get.chezmoi.io)" -- -b ~/.local/bin init --apply santiagoper
 
 ### With per-machine config (recommended)
 
-Use `--no-scripts` to initialize chezmoi without running the provisioner, set up your `host_vars/localhost.yml` first, then apply:
+Use `--exclude scripts` to initialize chezmoi without running the provisioner, set up your `host_vars/localhost.yml` first, then apply:
 
 ```bash
 # 1. Install chezmoi and clone dotfiles (no scripts run yet)
-sh -c "$(curl -fsLS get.chezmoi.io)" -- -b ~/.local/bin init --apply --no-scripts santiagopereda/chezmoi_dotfiles
+sh -c "$(curl -fsLS get.chezmoi.io)" -- -b ~/.local/bin init --apply --exclude scripts santiagopereda/chezmoi_dotfiles
 
 # 2. Create per-machine overrides
 cp ~/.local/share/chezmoi/.provisioner/host_vars/example.yml.dist \
