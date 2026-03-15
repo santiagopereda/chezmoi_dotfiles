@@ -44,12 +44,14 @@
   tags:
     - apps
 
-# Spotify (key is ASCII-armored despite .gpg extension, must dearmor)
+# Spotify
 - name: Add Spotify GPG key
-  ansible.builtin.shell:
-    cmd: curl -fsSL https://download.spotify.com/debian/pubkey_C85668DF69375001.gpg | gpg --dearmor --yes -o {{ apps_spotify_apt_key_path }}
+  ansible.builtin.get_url:
+    url: https://download.spotify.com/debian/pubkey_5384CE82BA52C83A.gpg
+    dest: "{{ apps_spotify_apt_key_path }}"
+    mode: "0644"
+    force: true
   become: true
-  changed_when: false
   tags:
     - apps
 
