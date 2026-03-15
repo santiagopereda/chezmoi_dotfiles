@@ -1,6 +1,7 @@
 ---
 # Per-host overrides - copy to localhost.yml and customize
 #
+# desktop_mode: false  # set to false for headless/server machines
 # desktop_user: myuser
 # python_versions:
 #   - "3.13"

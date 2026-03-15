@@ -3,6 +3,9 @@
 desktop_user: "{{ ansible_user_id }}"
 desktop_home: "{{ lookup('env', 'HOME') }}"
 
+# Set to false on headless machines (skips desktop apps, snap packages)
+desktop_mode: true
+
 # Python versions to install via uv
 python_versions:
   - "3.13"
