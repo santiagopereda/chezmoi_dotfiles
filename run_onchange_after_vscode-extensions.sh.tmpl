@@ -4,9 +4,11 @@
 # Install VS Code extensions (re-runs when this file changes)
 set -euo pipefail
 
-# Find the code binary (snap or PATH)
+# Find the code binary (apt puts it in /usr/bin, which may not be rehashed yet)
 if command -v code >/dev/null 2>&1; then
     CODE=code
+elif [ -x /usr/bin/code ]; then
+    CODE=/usr/bin/code
 elif snap list code >/dev/null 2>&1; then
     CODE="snap run code"
 else
