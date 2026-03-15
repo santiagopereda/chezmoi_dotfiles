@@ -1,0 +1,20 @@
+{
+    "workbench.colorTheme": "GitHub Dark",
+    "workbench.startupEditor": "none",
+    "workbench.editor.enablePreview": false,
+    "files.autoSave": "afterDelay",
+    "editor.fontFamily": "'Droid Sans Mono', 'monospace', monospace, 'Hack Nerd Font'",
+    "explorer.confirmDelete": false,
+    "git.openRepositoryInParentFolders": "never",
+    "redhat.telemetry.enabled": false,
+    "python.REPL.enableREPLSmartSend": false,
+    "jupyter.interactiveWindow.textEditor.executeSelection": true,
+    "[python]": {
+        "diffEditor.ignoreTrimWhitespace": false,
+        "editor.defaultColorDecorators": "never",
+        "editor.formatOnType": true,
+        "editor.wordBasedSuggestions": "off"
+    },
+    "claudeCode.preferredLocation": "panel",
+    "claudeCode.selectedModel": "default"
+}

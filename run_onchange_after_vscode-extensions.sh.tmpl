@@ -1,0 +1,48 @@
+#!/bin/bash
+# chezmoi:template:left-delimiter="{{" right-delimiter="}}"
+#
+# Install VS Code extensions (re-runs when this file changes)
+set -euo pipefail
+
+# Find the code binary (snap or PATH)
+if command -v code >/dev/null 2>&1; then
+    CODE=code
+elif snap list code >/dev/null 2>&1; then
+    CODE="snap run code"
+else
+    echo "==> VS Code not found, skipping extension install"
+    exit 0
+fi
+
+# extensions hash: {{ include "private_dot_config/Code/User/settings.json" | sha256sum }}
+
+EXTENSIONS=(
+    # Core
+    anthropic.claude-code
+    ms-python.python
+    ms-python.vscode-pylance
+    ms-python.debugpy
+    ms-toolsai.jupyter
+    ms-toolsai.jupyter-keymap
+    ms-azuretools.vscode-docker
+    ms-vscode-remote.remote-ssh
+    ms-vscode-remote.remote-containers
+    golang.go
+    redhat.java
+
+    # Nice to have
+    github.github-vscode-theme
+    njpwerner.autodocstring
+    kevinrose.vsc-python-indent
+    mechatroner.rainbow-csv
+    wholroyd.jinja
+    twxs.cmake
+    tomoki1207.pdf
+)
+
+echo "==> Installing VS Code extensions..."
+for ext in "${EXTENSIONS[@]}"; do
+    $CODE --install-extension "$ext" --force 2>/dev/null || echo "  Warning: failed to install $ext"
+done
+
+echo "==> VS Code extensions installed."
