@@ -74,6 +74,22 @@
     - apps
 
 # VS Code (all architectures, key is ASCII-armored)
+- name: Remove legacy VS Code repo source (wrong signed-by path)
+  ansible.builtin.file:
+    path: /etc/apt/sources.list.d/packages_microsoft_com_repos_code.list
+    state: absent
+  become: true
+  tags:
+    - apps
+
+- name: Remove legacy Microsoft GPG key
+  ansible.builtin.file:
+    path: /usr/share/keyrings/microsoft.gpg
+    state: absent
+  become: true
+  tags:
+    - apps
+
 - name: Add Microsoft GPG key
   ansible.builtin.shell:
     cmd: curl -fsSL https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor --yes -o {{ apps_vscode_apt_key_path }}
