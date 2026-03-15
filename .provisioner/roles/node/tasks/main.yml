@@ -1,0 +1,11 @@
+---
+- name: Install fnm
+  ansible.builtin.import_tasks: fnm.yml
+  tags:
+    - node
+    - fnm
+
+- name: Install Node.js versions
+  ansible.builtin.import_tasks: node-versions.yml
+  tags:
+    - node

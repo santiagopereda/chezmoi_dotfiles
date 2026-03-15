@@ -32,6 +32,10 @@ alias tmuxow='tmux show-options -w'
 alias tmuxos='tmux show-options -s'
 alias mux='tmuxinator'
 
+# modern coreutils (Debian names differ from upstream)
+command -v fdfind &>/dev/null && alias fd='fdfind'
+command -v batcat &>/dev/null && alias bat='batcat'
+
 # vim
 alias vim='nvim'
 alias vi='nvim'

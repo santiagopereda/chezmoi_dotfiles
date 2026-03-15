@@ -37,19 +37,11 @@ zstyle ':completion:*' completer _complete _correct _approximate
 # direnv
 command -v direnv &>/dev/null && eval "$(direnv hook zsh)"
 
-# nvm
-if [[ -d "$XDG_CONFIG_HOME/nvm" ]] && [[ -s "$XDG_CONFIG_HOME/nvm/nvm.sh" ]]; then
-  export NVM_DIR="$XDG_CONFIG_HOME/nvm"
-  \. "$NVM_DIR/nvm.sh"
-  \. "$NVM_DIR/bash_completion" 2>/dev/null
-fi
+# fnm (Node.js version manager)
+command -v fnm &>/dev/null && eval "$(fnm env --use-on-cd --shell zsh)"
 
-# pyenv
-if command -v pyenv &>/dev/null; then
-  export PYENV_ROOT="$HOME/.config/pyenv"
-  eval "$(pyenv init -)"
-  eval "$(pyenv virtualenv-init -)"
-fi
+# uv
+command -v uv &>/dev/null && eval "$(uv generate-shell-completion zsh)"
 
 # pip: require virtual environment for global installs
 gpip(){

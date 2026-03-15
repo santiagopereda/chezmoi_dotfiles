@@ -1,0 +1,65 @@
+---
+- name: Install lazydocker
+  ansible.builtin.shell:
+    cmd: >
+      curl -fsSL https://raw.githubusercontent.com/jesseduffield/lazydocker/master/scripts/install_update_linux.sh | bash
+    creates: "{{ desktop_home }}/.local/bin/lazydocker"
+  tags:
+    - common
+    - tools
+
+- name: Install lazygit
+  ansible.builtin.shell:
+    cmd: |
+      LAZYGIT_VERSION=$(curl -fsSL "https://api.github.com/repos/jesseduffield/lazygit/releases/latest" | jq -r '.tag_name' | sed 's/^v//')
+      curl -fsSLo /tmp/lazygit.tar.gz "https://github.com/jesseduffield/lazygit/releases/download/v${LAZYGIT_VERSION}/lazygit_${LAZYGIT_VERSION}_Linux_x86_64.tar.gz"
+      tar xf /tmp/lazygit.tar.gz -C /tmp lazygit
+      install /tmp/lazygit {{ desktop_home }}/.local/bin/lazygit
+      rm -f /tmp/lazygit.tar.gz /tmp/lazygit
+    creates: "{{ desktop_home }}/.local/bin/lazygit"
+  tags:
+    - common
+    - tools
+
+- name: Install yq
+  ansible.builtin.get_url:
+    url: https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64
+    dest: "{{ desktop_home }}/.local/bin/yq"
+    mode: "0755"
+  tags:
+    - common
+    - tools
+
+- name: Install delta
+  ansible.builtin.shell:
+    cmd: |
+      DELTA_VERSION=$(curl -fsSL "https://api.github.com/repos/dandavison/delta/releases/latest" | jq -r '.tag_name')
+      curl -fsSLo /tmp/delta.tar.gz "https://github.com/dandavison/delta/releases/download/${DELTA_VERSION}/delta-${DELTA_VERSION}-x86_64-unknown-linux-gnu.tar.gz"
+      tar xf /tmp/delta.tar.gz -C /tmp
+      install /tmp/delta-${DELTA_VERSION}-x86_64-unknown-linux-gnu/delta {{ desktop_home }}/.local/bin/delta
+      rm -rf /tmp/delta.tar.gz /tmp/delta-${DELTA_VERSION}-x86_64-unknown-linux-gnu
+    creates: "{{ desktop_home }}/.local/bin/delta"
+  tags:
+    - common
+    - tools
+
+- name: Install Go
+  ansible.builtin.shell:
+    cmd: |
+      GO_VERSION=$(curl -fsSL "https://go.dev/VERSION?m=text" | head -1)
+      curl -fsSLo /tmp/go.tar.gz "https://go.dev/dl/${GO_VERSION}.linux-amd64.tar.gz"
+      sudo rm -rf /usr/local/go
+      sudo tar -C /usr/local -xzf /tmp/go.tar.gz
+      rm -f /tmp/go.tar.gz
+    creates: /usr/local/go/bin/go
+  tags:
+    - common
+    - tools
+
+- name: Install Rust via rustup
+  ansible.builtin.shell:
+    cmd: curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --no-modify-path
+    creates: "{{ desktop_home }}/.cargo/bin/rustup"
+  tags:
+    - common
+    - tools

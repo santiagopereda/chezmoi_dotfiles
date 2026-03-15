@@ -1,0 +1,20 @@
+---
+- name: Install Node.js {{ item }} via fnm
+  ansible.builtin.command:
+    cmd: "{{ desktop_home }}/.local/bin/fnm install {{ item }}"
+  environment:
+    FNM_DIR: "{{ desktop_home }}/.local/share/fnm"
+  loop: "{{ node_versions }}"
+  register: fnm_node_install
+  changed_when: "'installed' in fnm_node_install.stderr | default('')"
+  tags:
+    - node
+
+- name: Set default Node.js version
+  ansible.builtin.command:
+    cmd: "{{ desktop_home }}/.local/bin/fnm default {{ node_versions[0] }}"
+  environment:
+    FNM_DIR: "{{ desktop_home }}/.local/share/fnm"
+  changed_when: false
+  tags:
+    - node

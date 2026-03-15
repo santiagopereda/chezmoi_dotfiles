@@ -12,3 +12,10 @@
   tags:
     - common
     - packages
+
+- name: Install CLI tools from GitHub releases (Linux)
+  ansible.builtin.import_tasks: tools-linux.yml
+  when: ansible_os_family != "Darwin"
+  tags:
+    - common
+    - tools

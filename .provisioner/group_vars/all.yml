@@ -7,6 +7,10 @@ desktop_home: "{{ lookup('env', 'HOME') }}"
 python_versions:
   - "3.13"
 
+# Node.js versions to install via fnm
+node_versions:
+  - "22"
+
 # Nerd Font
 nerd_font_name: Hack
 nerd_font_version: "3.3.0"
@@ -29,6 +33,16 @@ common_packages_debian:
   - direnv
   - imagemagick
   - ranger
+  - btop
+  - gh
+  - fzf
+  - ripgrep
+  - fd-find
+  - bat
+  - eza
+  - tldr
+  - nmap
+  - openjdk-17-jdk
 
 # Common packages - macOS (Homebrew)
 common_packages_darwin:
@@ -45,6 +59,22 @@ common_packages_darwin:
   - direnv
   - imagemagick
   - ranger
+  - btop
+  - gh
+  - fzf
+  - ripgrep
+  - fd
+  - bat
+  - eza
+  - tldr
+  - yq
+  - git-delta
+  - lazydocker
+  - lazygit
+  - nmap
+  - openjdk@17
+  - go
+  - rustup
 
 # Docker
 docker_packages_debian:

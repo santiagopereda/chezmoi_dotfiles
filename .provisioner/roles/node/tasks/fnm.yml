@@ -1,0 +1,8 @@
+---
+- name: Install fnm via official installer
+  ansible.builtin.shell:
+    cmd: curl -fsSL https://fnm.vercel.app/install | bash -s -- --skip-shell --install-dir {{ desktop_home }}/.local/bin
+    creates: "{{ desktop_home }}/.local/bin/fnm"
+  tags:
+    - node
+    - fnm
