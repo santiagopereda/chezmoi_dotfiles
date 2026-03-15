@@ -1,5 +1,5 @@
 ---
-- name: Install Node.js {{ item }} via fnm
+- name: "Install Node.js {{ item }} via fnm"
   ansible.builtin.command:
     cmd: "{{ desktop_home }}/.local/bin/fnm install {{ item }}"
   environment:

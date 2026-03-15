@@ -1,5 +1,5 @@
 ---
-- name: Install Python {{ item }} via uv
+- name: "Install Python {{ item }} via uv"
   ansible.builtin.command:
     cmd: "{{ desktop_home }}/.local/bin/uv python install {{ item }}"
   loop: "{{ python_versions }}"
