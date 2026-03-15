@@ -13,7 +13,7 @@
 # Ghostty (external apt repo)
 - name: Add Ghostty PPA
   ansible.builtin.apt_repository:
-    repo: ppa:ghostty/release
+    repo: ppa:mkasberg/ghostty-ubuntu
     state: present
   become: true
   when: install_ghostty | bool
