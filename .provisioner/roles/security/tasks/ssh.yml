@@ -1,11 +1,10 @@
 ---
-- name: Verify sshd_config supports Include directive (Linux)
+- name: Verify sshd_config supports Include directive
   ansible.builtin.command: grep -q '^Include /etc/ssh/sshd_config.d/' /etc/ssh/sshd_config
   register: sshd_include_check
   changed_when: false
   failed_when: false
   become: true
-  when: ansible_os_family == "Debian"
 
 - name: Fail if sshd_config does not support Include
   ansible.builtin.fail:
@@ -13,7 +12,7 @@
       /etc/ssh/sshd_config does not contain 'Include /etc/ssh/sshd_config.d/'.
       Drop-in config files require OpenSSH 8.2+ with Include support.
       Please upgrade OpenSSH or add the Include directive manually.
-  when: ansible_os_family == "Debian" and sshd_include_check.rc != 0
+  when: sshd_include_check.rc != 0
 
 - name: Ensure sshd_config.d directory exists
   ansible.builtin.file:

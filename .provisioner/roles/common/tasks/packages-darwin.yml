@@ -1,9 +1,16 @@
 ---
-- name: Ensure Homebrew is installed
+- name: Check Homebrew (Apple Silicon)
   ansible.builtin.stat:
     path: /opt/homebrew/bin/brew
-  register: homebrew_check
-  become: true
+  register: homebrew_arm
+  tags:
+    - common
+    - packages
+
+- name: Check Homebrew (Intel)
+  ansible.builtin.stat:
+    path: /usr/local/bin/brew
+  register: homebrew_intel
   tags:
     - common
     - packages
@@ -11,9 +18,9 @@
 - name: Install Homebrew
   ansible.builtin.shell:
     cmd: /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-    creates: /opt/homebrew/bin/brew
-  become: false
-  when: not homebrew_check.stat.exists
+  environment:
+    NONINTERACTIVE: "1"
+  when: not homebrew_arm.stat.exists and not homebrew_intel.stat.exists
   tags:
     - common
     - packages
@@ -22,7 +29,6 @@
   community.general.homebrew:
     name: "{{ common_packages_darwin + extra_packages_darwin }}"
     state: present
-  become: false
   tags:
     - common
     - packages

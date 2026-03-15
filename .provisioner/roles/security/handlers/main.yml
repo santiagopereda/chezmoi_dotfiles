@@ -13,10 +13,17 @@
   become: true
   listen: restart sshd
 
-- name: restart sshd macos
+- name: Validate sshd configuration (macOS)
+  ansible.builtin.command: sshd -t
+  changed_when: false
+  become: true
+  listen: restart sshd macos
+
+- name: Restart sshd service (macOS)
   ansible.builtin.command:
     cmd: launchctl kickstart -k system/com.openssh.sshd
   become: true
+  listen: restart sshd macos
 
 - name: restart fail2ban
   ansible.builtin.systemd:

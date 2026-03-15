@@ -2,8 +2,6 @@
 - name: Install Python {{ item }} via uv
   ansible.builtin.command:
     cmd: "{{ desktop_home }}/.local/bin/uv python install {{ item }}"
-  become: true
-  become_user: "{{ desktop_user }}"
   loop: "{{ python_versions }}"
   register: uv_python_install
   changed_when: "'Installed' in uv_python_install.stdout"
