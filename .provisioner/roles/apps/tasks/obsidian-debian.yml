@@ -14,7 +14,7 @@
     dest: "/tmp/obsidian_{{ obsidian_version }}_amd64.deb"
     mode: "0644"
   when:
-    - ansible_architecture == "x86_64"
+    - ansible_facts['architecture'] == "x86_64"
     - obsidian_installed.rc != 0 or obsidian_installed.stdout != obsidian_version
   tags:
     - apps
@@ -25,7 +25,7 @@
     state: present
   become: true
   when:
-    - ansible_architecture == "x86_64"
+    - ansible_facts['architecture'] == "x86_64"
     - obsidian_installed.rc != 0 or obsidian_installed.stdout != obsidian_version
   tags:
     - apps

@@ -1,12 +1,12 @@
 ---
 - name: Install Docker (Debian/Ubuntu)
   ansible.builtin.import_tasks: docker-debian.yml
-  when: ansible_os_family == "Debian"
+  when: ansible_facts['os_family'] == "Debian"
   tags:
     - docker
 
 - name: Install Docker (macOS)
   ansible.builtin.import_tasks: docker-darwin.yml
-  when: ansible_os_family == "Darwin"
+  when: ansible_facts['os_family'] == "Darwin"
   tags:
     - docker

@@ -12,7 +12,7 @@
 - name: Add Brave apt repository
   ansible.builtin.apt_repository:
     repo: >-
-      deb [arch={{ ansible_architecture | regex_replace('x86_64', 'amd64') | regex_replace('aarch64', 'arm64') }}
+      deb [arch={{ ansible_facts['architecture'] | regex_replace('x86_64', 'amd64') | regex_replace('aarch64', 'arm64') }}
       signed-by={{ apps_brave_apt_key_path }}]
       https://brave-browser-apt-release.s3.brave.com/
       stable main
@@ -35,9 +35,9 @@
 - name: Add 1Password apt repository
   ansible.builtin.apt_repository:
     repo: >-
-      deb [arch={{ ansible_architecture | regex_replace('x86_64', 'amd64') | regex_replace('aarch64', 'arm64') }}
+      deb [arch={{ ansible_facts['architecture'] | regex_replace('x86_64', 'amd64') | regex_replace('aarch64', 'arm64') }}
       signed-by={{ apps_1password_apt_key_path }}]
-      https://downloads.1password.com/linux/debian/{{ ansible_architecture | regex_replace('x86_64', 'amd64') | regex_replace('aarch64', 'arm64') }}
+      https://downloads.1password.com/linux/debian/{{ ansible_facts['architecture'] | regex_replace('x86_64', 'amd64') | regex_replace('aarch64', 'arm64') }}
       stable main
     state: present
     filename: 1password
@@ -70,7 +70,7 @@
 # Tailscale
 - name: Add Tailscale GPG key
   ansible.builtin.get_url:
-    url: https://pkgs.tailscale.com/stable/{{ ansible_distribution | lower }}/{{ ansible_distribution_release }}.noarmor.gpg
+    url: https://pkgs.tailscale.com/stable/{{ ansible_facts['distribution'] | lower }}/{{ ansible_facts['distribution_release'] }}.noarmor.gpg
     dest: "{{ apps_tailscale_apt_key_path }}"
     mode: "0644"
   become: true
@@ -81,8 +81,8 @@
   ansible.builtin.apt_repository:
     repo: >-
       deb [signed-by={{ apps_tailscale_apt_key_path }}]
-      https://pkgs.tailscale.com/stable/{{ ansible_distribution | lower }}
-      {{ ansible_distribution_release }} main
+      https://pkgs.tailscale.com/stable/{{ ansible_facts['distribution'] | lower }}
+      {{ ansible_facts['distribution_release'] }} main
     state: present
     filename: tailscale
   become: true
@@ -102,10 +102,10 @@
 - name: Add LibreWolf apt repository
   ansible.builtin.apt_repository:
     repo: >-
-      deb [arch={{ ansible_architecture | regex_replace('x86_64', 'amd64') | regex_replace('aarch64', 'arm64') }}
+      deb [arch={{ ansible_facts['architecture'] | regex_replace('x86_64', 'amd64') | regex_replace('aarch64', 'arm64') }}
       signed-by={{ apps_librewolf_apt_key_path }}]
       https://deb.librewolf.net
-      {{ ansible_distribution_release }} main
+      {{ ansible_facts['distribution_release'] }} main
     state: present
     filename: librewolf
   become: true

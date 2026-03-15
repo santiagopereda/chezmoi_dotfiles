@@ -7,14 +7,14 @@
 
 - name: Configure firewall (Linux)
   ansible.builtin.import_tasks: firewall.yml
-  when: ansible_os_family == "Debian"
+  when: ansible_facts['os_family'] == "Debian"
   tags:
     - security
     - firewall
 
 - name: Configure fail2ban (Linux)
   ansible.builtin.import_tasks: fail2ban.yml
-  when: ansible_os_family == "Debian"
+  when: ansible_facts['os_family'] == "Debian"
   tags:
     - security
     - fail2ban

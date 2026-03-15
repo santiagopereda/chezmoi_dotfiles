@@ -1,21 +1,21 @@
 ---
 - name: Install packages (Debian/Ubuntu)
   ansible.builtin.import_tasks: packages-debian.yml
-  when: ansible_os_family == "Debian"
+  when: ansible_facts['os_family'] == "Debian"
   tags:
     - common
     - packages
 
 - name: Install packages (macOS)
   ansible.builtin.import_tasks: packages-darwin.yml
-  when: ansible_os_family == "Darwin"
+  when: ansible_facts['os_family'] == "Darwin"
   tags:
     - common
     - packages
 
 - name: Install CLI tools from GitHub releases (Linux)
   ansible.builtin.import_tasks: tools-linux.yml
-  when: ansible_os_family != "Darwin"
+  when: ansible_facts['os_family'] != "Darwin"
   tags:
     - common
     - tools

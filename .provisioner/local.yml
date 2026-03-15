@@ -7,8 +7,8 @@
     - name: Validate supported platform
       ansible.builtin.assert:
         that:
-          - ansible_os_family in ["Debian", "Darwin"]
-        fail_msg: "Unsupported OS family: {{ ansible_os_family }}. Only Debian/Ubuntu and macOS are supported."
+          - ansible_facts['os_family'] in ["Debian", "Darwin"]
+        fail_msg: "Unsupported OS family: {{ ansible_facts['os_family'] }}. Only Debian/Ubuntu and macOS are supported."
       tags:
         - always
 

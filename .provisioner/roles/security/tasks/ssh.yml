@@ -19,7 +19,7 @@
     path: /etc/ssh/sshd_config.d
     state: directory
     owner: root
-    group: "{{ 'wheel' if ansible_os_family == 'Darwin' else 'root' }}"
+    group: "{{ 'wheel' if ansible_facts['os_family'] == 'Darwin' else 'root' }}"
     mode: "0755"
   become: true
 
@@ -31,7 +31,7 @@
     group: root
     mode: "0644"
   become: true
-  when: ansible_os_family == "Debian"
+  when: ansible_facts['os_family'] == "Debian"
   notify: restart sshd
   tags:
     - security
@@ -45,7 +45,7 @@
     group: wheel
     mode: "0644"
   become: true
-  when: ansible_os_family == "Darwin"
+  when: ansible_facts['os_family'] == "Darwin"
   notify: restart sshd macos
   tags:
     - security
