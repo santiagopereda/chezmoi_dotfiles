@@ -18,3 +18,8 @@
   ansible.builtin.import_tasks: obsidian-debian.yml
   tags:
     - apps
+
+- name: Import terminal emulator installs
+  ansible.builtin.import_tasks: terminals-debian.yml
+  tags:
+    - apps

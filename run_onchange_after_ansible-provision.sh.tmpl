@@ -13,6 +13,8 @@ set -euo pipefail
 # docker/tasks: {{ include ".provisioner/roles/docker/tasks/main.yml" | sha256sum }}
 # shell/tasks: {{ include ".provisioner/roles/shell/tasks/main.yml" | sha256sum }}
 # python/tasks: {{ include ".provisioner/roles/python/tasks/main.yml" | sha256sum }}
+# node/tasks: {{ include ".provisioner/roles/node/tasks/main.yml" | sha256sum }}
+# apps/tasks: {{ include ".provisioner/roles/apps/tasks/main.yml" | sha256sum }}
 # fonts/tasks: {{ include ".provisioner/roles/fonts/tasks/main.yml" | sha256sum }}
 
 CHEZMOI_SOURCE="{{ .chezmoi.sourceDir }}"

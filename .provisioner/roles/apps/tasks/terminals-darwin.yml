@@ -1,0 +1,9 @@
+---
+- name: Install terminal emulators via Homebrew cask
+  community.general.homebrew_cask:
+    name: "{{ apps_terminal_casks }}"
+    state: present
+  when: apps_terminal_casks | length > 0
+  tags:
+    - apps
+    - terminals

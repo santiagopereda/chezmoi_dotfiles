@@ -6,6 +6,10 @@ desktop_home: "{{ lookup('env', 'HOME') }}"
 # Set to false on headless machines (skips desktop apps, snap packages)
 desktop_mode: true
 
+# Terminal emulators (override in host_vars/localhost.yml per machine)
+install_kitty: false
+install_ghostty: false
+
 # Python versions to install via uv
 python_versions:
   - "3.13"

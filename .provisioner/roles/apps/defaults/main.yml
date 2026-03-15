@@ -4,3 +4,10 @@ apps_1password_apt_key_path: /etc/apt/keyrings/1password-archive-keyring.gpg
 apps_spotify_apt_key_path: /etc/apt/keyrings/spotify.gpg
 apps_vscode_apt_key_path: /etc/apt/keyrings/microsoft.gpg
 apps_tailscale_apt_key_path: /etc/apt/keyrings/tailscale-archive-keyring.gpg
+
+# macOS terminal emulator casks (built dynamically from install_kitty/install_ghostty)
+apps_terminal_casks: >-
+  {{
+    ((['kitty'] if install_kitty | bool else []) +
+     (['ghostty'] if install_ghostty | bool else []))
+  }}

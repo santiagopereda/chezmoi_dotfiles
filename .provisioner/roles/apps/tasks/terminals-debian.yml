@@ -1,0 +1,33 @@
+---
+# Kitty (available in apt)
+- name: Install Kitty
+  ansible.builtin.apt:
+    name: kitty
+    state: present
+  become: true
+  when: install_kitty | bool
+  tags:
+    - apps
+    - terminals
+
+# Ghostty (external apt repo)
+- name: Add Ghostty PPA
+  ansible.builtin.apt_repository:
+    repo: ppa:ghostty/release
+    state: present
+  become: true
+  when: install_ghostty | bool
+  tags:
+    - apps
+    - terminals
+
+- name: Install Ghostty
+  ansible.builtin.apt:
+    name: ghostty
+    state: present
+    update_cache: true
+  become: true
+  when: install_ghostty | bool
+  tags:
+    - apps
+    - terminals
