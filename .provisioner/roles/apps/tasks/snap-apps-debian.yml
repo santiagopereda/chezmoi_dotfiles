@@ -6,6 +6,16 @@
     state: present
   become: true
   loop: "{{ apps_snap_packages_debian }}"
+  tags:
+    - apps
+
+- name: Install amd64-only desktop apps via snap
+  community.general.snap:
+    name: "{{ item.name }}"
+    classic: "{{ item.classic | default(false) }}"
+    state: present
+  become: true
+  loop: "{{ apps_snap_packages_debian_amd64 }}"
   when: ansible_facts['architecture'] == 'x86_64'
   tags:
     - apps

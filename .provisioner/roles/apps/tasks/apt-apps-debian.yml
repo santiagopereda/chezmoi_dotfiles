@@ -4,7 +4,7 @@
     name: >-
       {{ apps_apt_packages_debian
          + (['brave-browser', '1password', 'spotify-client'] if ansible_facts['architecture'] == 'x86_64' else [])
-         + ['tailscale', 'librewolf'] }}
+         + ['code', 'tailscale', 'librewolf'] }}
     state: present
     update_cache: true
   become: true

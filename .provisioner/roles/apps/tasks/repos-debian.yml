@@ -73,6 +73,28 @@
   tags:
     - apps
 
+# VS Code (all architectures, key is ASCII-armored)
+- name: Add Microsoft GPG key
+  ansible.builtin.shell:
+    cmd: curl -fsSL https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor --yes -o {{ apps_vscode_apt_key_path }}
+  become: true
+  changed_when: false
+  tags:
+    - apps
+
+- name: Add VS Code apt repository
+  ansible.builtin.apt_repository:
+    repo: >-
+      deb [arch={{ ansible_facts['architecture'] | regex_replace('x86_64', 'amd64') | regex_replace('aarch64', 'arm64') }}
+      signed-by={{ apps_vscode_apt_key_path }}]
+      https://packages.microsoft.com/repos/code
+      stable main
+    state: present
+    filename: vscode
+  become: true
+  tags:
+    - apps
+
 # Tailscale (all architectures)
 - name: Add Tailscale GPG key
   ansible.builtin.get_url:

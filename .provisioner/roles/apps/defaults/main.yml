@@ -2,4 +2,5 @@
 apps_brave_apt_key_path: /etc/apt/keyrings/brave-browser-archive-keyring.gpg
 apps_1password_apt_key_path: /etc/apt/keyrings/1password-archive-keyring.gpg
 apps_spotify_apt_key_path: /etc/apt/keyrings/spotify.gpg
+apps_vscode_apt_key_path: /etc/apt/keyrings/microsoft.gpg
 apps_tailscale_apt_key_path: /etc/apt/keyrings/tailscale-archive-keyring.gpg
