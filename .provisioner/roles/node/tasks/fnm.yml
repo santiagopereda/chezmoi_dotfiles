@@ -1,8 +1,26 @@
 ---
+- name: Check if fnm is available
+  ansible.builtin.shell:
+    cmd: command -v fnm
+  register: fnm_which
+  changed_when: false
+  failed_when: false
+  tags:
+    - node
+    - fnm
+
 - name: Install fnm via official installer
   ansible.builtin.shell:
     cmd: curl -fsSL https://fnm.vercel.app/install | bash -s -- --skip-shell --install-dir {{ desktop_home }}/.local/bin
     creates: "{{ desktop_home }}/.local/bin/fnm"
+  when: fnm_which.rc != 0
+  tags:
+    - node
+    - fnm
+
+- name: Set fnm binary path
+  ansible.builtin.set_fact:
+    fnm_bin: "{{ fnm_which.stdout | default(desktop_home + '/.local/bin/fnm') }}"
   tags:
     - node
     - fnm

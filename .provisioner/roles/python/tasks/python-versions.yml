@@ -1,7 +1,7 @@
 ---
 - name: Install Python versions via uv
   ansible.builtin.command:
-    cmd: "{{ desktop_home }}/.local/bin/uv python install {{ item }}"
+    cmd: "{{ uv_bin }} python install {{ item }}"
   loop: "{{ python_versions }}"
   register: uv_python_install
   changed_when: "'Installed' in uv_python_install.stdout"

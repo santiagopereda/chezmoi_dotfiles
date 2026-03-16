@@ -1,15 +1,33 @@
 ---
+- name: Check if uv is available
+  ansible.builtin.shell:
+    cmd: command -v uv
+  register: uv_which
+  changed_when: false
+  failed_when: false
+  tags:
+    - python
+    - uv
+
 - name: Install uv via official installer
   ansible.builtin.shell:
     cmd: curl -LsSf https://astral.sh/uv/install.sh | sh
     creates: "{{ desktop_home }}/.local/bin/uv"
+  when: uv_which.rc != 0
+  tags:
+    - python
+    - uv
+
+- name: Set uv binary path
+  ansible.builtin.set_fact:
+    uv_bin: "{{ uv_which.stdout | default(desktop_home + '/.local/bin/uv') }}"
   tags:
     - python
     - uv
 
 - name: Update uv to latest version
   ansible.builtin.command:
-    cmd: "{{ desktop_home }}/.local/bin/uv self update"
+    cmd: "{{ uv_bin }} self update"
   register: uv_update
   changed_when: "'Updated' in uv_update.stdout"
   tags:
