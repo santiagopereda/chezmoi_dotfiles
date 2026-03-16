@@ -8,14 +8,38 @@ set -euo pipefail
 # -- Change detection hashes (chezmoi re-runs this script when any hash changes) --
 # group_vars: {{ include ".provisioner/group_vars/all.yml" | sha256sum }}
 # local.yml: {{ include ".provisioner/local.yml" | sha256sum }}
-# common/tasks: {{ include ".provisioner/roles/common/tasks/main.yml" | sha256sum }}
-# security/tasks: {{ include ".provisioner/roles/security/tasks/main.yml" | sha256sum }}
-# docker/tasks: {{ include ".provisioner/roles/docker/tasks/main.yml" | sha256sum }}
-# shell/tasks: {{ include ".provisioner/roles/shell/tasks/main.yml" | sha256sum }}
-# python/tasks: {{ include ".provisioner/roles/python/tasks/main.yml" | sha256sum }}
-# node/tasks: {{ include ".provisioner/roles/node/tasks/main.yml" | sha256sum }}
-# apps/tasks: {{ include ".provisioner/roles/apps/tasks/main.yml" | sha256sum }}
-# fonts/tasks: {{ include ".provisioner/roles/fonts/tasks/main.yml" | sha256sum }}
+# ansible.cfg: {{ include ".provisioner/ansible.cfg" | sha256sum }}
+# common/main: {{ include ".provisioner/roles/common/tasks/main.yml" | sha256sum }}
+# common/packages-darwin: {{ include ".provisioner/roles/common/tasks/packages-darwin.yml" | sha256sum }}
+# common/packages-debian: {{ include ".provisioner/roles/common/tasks/packages-debian.yml" | sha256sum }}
+# common/tools-linux: {{ include ".provisioner/roles/common/tasks/tools-linux.yml" | sha256sum }}
+# security/main: {{ include ".provisioner/roles/security/tasks/main.yml" | sha256sum }}
+# security/ssh: {{ include ".provisioner/roles/security/tasks/ssh.yml" | sha256sum }}
+# security/fail2ban: {{ include ".provisioner/roles/security/tasks/fail2ban.yml" | sha256sum }}
+# security/firewall: {{ include ".provisioner/roles/security/tasks/firewall.yml" | sha256sum }}
+# docker/main: {{ include ".provisioner/roles/docker/tasks/main.yml" | sha256sum }}
+# docker/docker-darwin: {{ include ".provisioner/roles/docker/tasks/docker-darwin.yml" | sha256sum }}
+# docker/docker-debian: {{ include ".provisioner/roles/docker/tasks/docker-debian.yml" | sha256sum }}
+# shell/main: {{ include ".provisioner/roles/shell/tasks/main.yml" | sha256sum }}
+# shell/zsh: {{ include ".provisioner/roles/shell/tasks/zsh.yml" | sha256sum }}
+# python/main: {{ include ".provisioner/roles/python/tasks/main.yml" | sha256sum }}
+# python/uv: {{ include ".provisioner/roles/python/tasks/uv.yml" | sha256sum }}
+# python/python-versions: {{ include ".provisioner/roles/python/tasks/python-versions.yml" | sha256sum }}
+# node/main: {{ include ".provisioner/roles/node/tasks/main.yml" | sha256sum }}
+# node/fnm: {{ include ".provisioner/roles/node/tasks/fnm.yml" | sha256sum }}
+# node/node-versions: {{ include ".provisioner/roles/node/tasks/node-versions.yml" | sha256sum }}
+# apps/main: {{ include ".provisioner/roles/apps/tasks/main.yml" | sha256sum }}
+# apps/apps-darwin: {{ include ".provisioner/roles/apps/tasks/apps-darwin.yml" | sha256sum }}
+# apps/apps-debian: {{ include ".provisioner/roles/apps/tasks/apps-debian.yml" | sha256sum }}
+# apps/apt-apps-debian: {{ include ".provisioner/roles/apps/tasks/apt-apps-debian.yml" | sha256sum }}
+# apps/repos-debian: {{ include ".provisioner/roles/apps/tasks/repos-debian.yml" | sha256sum }}
+# apps/snap-apps-debian: {{ include ".provisioner/roles/apps/tasks/snap-apps-debian.yml" | sha256sum }}
+# apps/obsidian-debian: {{ include ".provisioner/roles/apps/tasks/obsidian-debian.yml" | sha256sum }}
+# apps/terminals-darwin: {{ include ".provisioner/roles/apps/tasks/terminals-darwin.yml" | sha256sum }}
+# apps/terminals-debian: {{ include ".provisioner/roles/apps/tasks/terminals-debian.yml" | sha256sum }}
+# fonts/main: {{ include ".provisioner/roles/fonts/tasks/main.yml" | sha256sum }}
+# fonts/fonts-darwin: {{ include ".provisioner/roles/fonts/tasks/fonts-darwin.yml" | sha256sum }}
+# fonts/fonts-linux: {{ include ".provisioner/roles/fonts/tasks/fonts-linux.yml" | sha256sum }}
 
 CHEZMOI_SOURCE="{{ .chezmoi.sourceDir }}"
 PROVISIONER_DIR="$CHEZMOI_SOURCE/.provisioner"
