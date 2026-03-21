@@ -34,9 +34,9 @@ setopt CORRECT
 # Completion style
 zstyle ':completion:*' completer _complete _correct _approximate
 
-# rbw SSH agent
+# SSH agent
 if [[ "$OSTYPE" == darwin* ]]; then
-  export SSH_AUTH_SOCK="${TMPDIR}rbw-$(id -u)/ssh-agent-socket"
+  export SSH_AUTH_SOCK=~/Library/Group\ Containers/2BUA8C4S2C.com.1password/t/agent.sock
 else
   export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/rbw/ssh-agent-socket"
 fi

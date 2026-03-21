@@ -36,6 +36,9 @@ alias mux='tmuxinator'
 command -v fdfind &>/dev/null && alias fd='fdfind'
 command -v batcat &>/dev/null && alias bat='batcat'
 
+# rbw SSH (override 1Password agent with rbw for specific connections)
+alias ssh-rbw='SSH_AUTH_SOCK="${TMPDIR}rbw-$(id -u)/ssh-agent-socket" ssh'
+
 # vim
 alias vim='nvim'
 alias vi='nvim'
