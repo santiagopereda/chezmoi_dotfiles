@@ -1,6 +1,13 @@
 #!/bin/sh
-# Show CPU temperature — supports lm_sensors (x86), vcgencmd (Pi), sysfs fallback
+# Show CPU temperature — supports lm_sensors (x86), vcgencmd (Pi), sysfs fallback, macOS
 temp=""
+
+# macOS: try osx-cpu-temp (brew install osx-cpu-temp)
+if [ -z "$temp" ] && [ "$(uname -s)" = "Darwin" ]; then
+  if command -v osx-cpu-temp >/dev/null 2>&1; then
+    temp=$(osx-cpu-temp 2>/dev/null | grep -o '[0-9]\{1,3\}\.[0-9].*C')
+  fi
+fi
 
 # Try lm_sensors (x86)
 if [ -z "$temp" ] && command -v sensors >/dev/null 2>&1; then

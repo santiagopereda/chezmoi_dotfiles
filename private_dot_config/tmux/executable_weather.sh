@@ -4,7 +4,10 @@ cache=/tmp/tmux_weather
 now=$(date +%s)
 
 if [ -f "$cache" ]; then
-  age=$(stat -c %Y "$cache" 2>/dev/null || echo 0)
+  case "$(uname -s)" in
+    Darwin) age=$(stat -f %m "$cache" 2>/dev/null || echo 0) ;;
+    *)      age=$(stat -c %Y "$cache" 2>/dev/null || echo 0) ;;
+  esac
   if [ "$((now - age))" -lt 900 ]; then
     cat "$cache"
     exit 0
