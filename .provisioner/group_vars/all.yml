@@ -82,6 +82,7 @@ common_packages_darwin:
   - go
   - rustup
   - rbw
+  - openssh
 
 # Docker
 docker_packages_debian:

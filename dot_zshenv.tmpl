@@ -22,6 +22,12 @@ export ZDOTDIR="$XDG_CONFIG_HOME/zsh"
 # oh-my-zsh
 export ZSH="$HOME/.config/oh-my-zsh"
 
+{{- if eq .chezmoi.os "darwin" }}
+
+# PATH: Homebrew (Apple Silicon)
+[[ -d "/opt/homebrew/bin" ]] && PATH="/opt/homebrew/bin:$PATH"
+{{- end }}
+
 # PATH: user-local binaries
 [[ -d "$HOME/.local/bin" ]] && PATH="$HOME/.local/bin:$PATH"
 
