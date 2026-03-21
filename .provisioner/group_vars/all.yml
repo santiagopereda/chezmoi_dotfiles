@@ -81,6 +81,7 @@ common_packages_darwin:
   - openjdk@17
   - go
   - rustup
+  - rbw
 
 # Docker
 docker_packages_debian:

@@ -72,3 +72,11 @@
   tags:
     - common
     - tools
+
+- name: Install rbw via cargo
+  ansible.builtin.shell:
+    cmd: "{{ desktop_home }}/.cargo/bin/cargo install rbw"
+    creates: "{{ desktop_home }}/.cargo/bin/rbw"
+  tags:
+    - common
+    - tools
