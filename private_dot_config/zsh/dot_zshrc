@@ -35,7 +35,11 @@ setopt CORRECT
 zstyle ':completion:*' completer _complete _correct _approximate
 
 # rbw SSH agent
-export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/rbw/ssh-agent-socket"
+if [[ "$OSTYPE" == darwin* ]]; then
+  export SSH_AUTH_SOCK="${TMPDIR}rbw-$(id -u)/ssh-agent-socket"
+else
+  export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/rbw/ssh-agent-socket"
+fi
 
 # direnv
 command -v direnv &>/dev/null && eval "$(direnv hook zsh)"
