@@ -130,6 +130,7 @@ apps_cask_packages_darwin:
   - drawio
   - localsend
   - flameshot
+  - tailscale
 
 # Obsidian version (GitHub .deb for Debian)
 obsidian_version: "1.7.7"
