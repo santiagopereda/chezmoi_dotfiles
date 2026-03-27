@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+# SSH wrapper that uses rbw (Bitwarden) SSH agent instead of default agent.
+# Overrides SSH_AUTH_SOCK to point to rbw's agent socket.
+
+if [[ -S "${TMPDIR}rbw-$(id -u)/ssh-agent-socket" ]]; then
+    # macOS: TMPDIR is set per-session
+    export SSH_AUTH_SOCK="${TMPDIR}rbw-$(id -u)/ssh-agent-socket"
+elif [[ -S "/run/user/$(id -u)/rbw/ssh-agent-socket" ]]; then
+    # Linux: XDG runtime directory
+    export SSH_AUTH_SOCK="/run/user/$(id -u)/rbw/ssh-agent-socket"
+fi
+
+exec /usr/bin/ssh "$@"

@@ -8,6 +8,7 @@ security_ssh_kbd_interactive_authentication: "no"
 security_ssh_pubkey_authentication: "yes"
 security_ssh_use_pam: "yes"
 security_ssh_allowed_users: ""
+security_ssh_allow_tcp_forwarding: "yes"
 
 # fail2ban
 security_fail2ban_bantime: 600

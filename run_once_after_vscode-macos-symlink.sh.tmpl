@@ -1,0 +1,34 @@
+#!/bin/bash
+# chezmoi:template:left-delimiter="{{" right-delimiter="}}"
+#
+# On macOS, VS Code reads settings from ~/Library/Application Support/Code/User/
+# but chezmoi manages ~/.config/Code/User/. Create symlinks so both point to the
+# same files.
+{{ if ne .chezmoi.os "darwin" }}
+exit 0
+{{ end }}
+
+set -euo pipefail
+
+VSCODE_MACOS="$HOME/Library/Application Support/Code/User"
+VSCODE_XDG="$HOME/.config/Code/User"
+
+mkdir -p "$VSCODE_MACOS"
+
+for file in settings.json keybindings.json; do
+    src="$VSCODE_XDG/$file"
+    dest="$VSCODE_MACOS/$file"
+
+    if [ ! -f "$src" ]; then
+        continue
+    fi
+
+    # Back up existing file if it's not already a symlink
+    if [ -f "$dest" ] && [ ! -L "$dest" ]; then
+        mv "$dest" "$dest.bak"
+        echo "==> Backed up $dest to $dest.bak"
+    fi
+
+    ln -sf "$src" "$dest"
+    echo "==> Symlinked $dest -> $src"
+done

@@ -9,4 +9,5 @@ UsePAM {{ security_ssh_use_pam }}
 {% if security_ssh_allowed_users | default('') | length > 0 %}
 AllowUsers {{ security_ssh_allowed_users }}
 {% endif %}
+AllowTcpForwarding {{ security_ssh_allow_tcp_forwarding }}
 X11Forwarding no

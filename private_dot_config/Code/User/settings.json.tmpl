@@ -16,5 +16,6 @@
         "editor.wordBasedSuggestions": "off"
     },
     "claudeCode.preferredLocation": "panel",
-    "claudeCode.selectedModel": "default"
+    "claudeCode.selectedModel": "default"{{ if eq .chezmoi.os "darwin" }},
+    "remote.SSH.path": "{{ .chezmoi.homeDir }}/.local/bin/ssh-rbw"{{ end }}
 }

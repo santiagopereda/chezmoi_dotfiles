@@ -5,3 +5,7 @@
 README.md
 LICENSE
 .ansible-lint
+
+{{ if ne .chezmoi.os "darwin" }}
+.local/bin/ssh-rbw
+{{ end }}
