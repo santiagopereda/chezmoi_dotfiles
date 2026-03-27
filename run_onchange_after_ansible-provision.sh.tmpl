@@ -40,6 +40,25 @@ set -euo pipefail
 # fonts/main: {{ include ".provisioner/roles/fonts/tasks/main.yml" | sha256sum }}
 # fonts/fonts-darwin: {{ include ".provisioner/roles/fonts/tasks/fonts-darwin.yml" | sha256sum }}
 # fonts/fonts-linux: {{ include ".provisioner/roles/fonts/tasks/fonts-linux.yml" | sha256sum }}
+#
+# -- Defaults --
+# common/defaults: {{ include ".provisioner/roles/common/defaults/main.yml" | sha256sum }}
+# security/defaults: {{ include ".provisioner/roles/security/defaults/main.yml" | sha256sum }}
+# docker/defaults: {{ include ".provisioner/roles/docker/defaults/main.yml" | sha256sum }}
+# shell/defaults: {{ include ".provisioner/roles/shell/defaults/main.yml" | sha256sum }}
+# python/defaults: {{ include ".provisioner/roles/python/defaults/main.yml" | sha256sum }}
+# node/defaults: {{ include ".provisioner/roles/node/defaults/main.yml" | sha256sum }}
+# apps/defaults: {{ include ".provisioner/roles/apps/defaults/main.yml" | sha256sum }}
+# fonts/defaults: {{ include ".provisioner/roles/fonts/defaults/main.yml" | sha256sum }}
+#
+# -- Handlers --
+# docker/handlers: {{ include ".provisioner/roles/docker/handlers/main.yml" | sha256sum }}
+# security/handlers: {{ include ".provisioner/roles/security/handlers/main.yml" | sha256sum }}
+# fonts/handlers: {{ include ".provisioner/roles/fonts/handlers/main.yml" | sha256sum }}
+#
+# -- Templates --
+# security/sshd_config: {{ include ".provisioner/roles/security/templates/sshd_config.j2" | sha256sum }}
+# security/jail.local: {{ include ".provisioner/roles/security/templates/jail.local.j2" | sha256sum }}
 
 CHEZMOI_SOURCE="{{ .chezmoi.sourceDir }}"
 PROVISIONER_DIR="$CHEZMOI_SOURCE/.provisioner"
