@@ -49,6 +49,7 @@ common_packages_debian:
   - eza
   - nmap
   - openjdk-17-jdk
+  - pinentry-curses
 
 # Common packages - macOS (Homebrew)
 common_packages_darwin:

@@ -32,3 +32,11 @@
   tags:
     - common
     - packages
+
+- name: Configure rbw to use pinentry-curses
+  ansible.builtin.command:
+    cmd: rbw config set pinentry pinentry-curses
+  changed_when: false
+  tags:
+    - common
+    - packages

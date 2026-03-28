@@ -80,3 +80,11 @@
   tags:
     - common
     - tools
+
+- name: Configure rbw to use pinentry-curses
+  ansible.builtin.command:
+    cmd: "{{ desktop_home }}/.cargo/bin/rbw config set pinentry pinentry-curses"
+  changed_when: false
+  tags:
+    - common
+    - tools
