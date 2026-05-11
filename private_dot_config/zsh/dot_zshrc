@@ -59,4 +59,5 @@ gpip(){
 [[ ! -f ~/.config/zsh/.p10k.zsh ]] || source ~/.config/zsh/.p10k.zsh
 
 # Load machine-local overrides if present
+[[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
 load-local() { [[ -f ~/.zshrc.local ]] && source ~/.zshrc.local }
