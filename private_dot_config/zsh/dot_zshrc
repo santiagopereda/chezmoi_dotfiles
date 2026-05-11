@@ -57,3 +57,6 @@ gpip(){
 
 # Powerlevel10k config
 [[ ! -f ~/.config/zsh/.p10k.zsh ]] || source ~/.config/zsh/.p10k.zsh
+
+# Load machine-local overrides if present
+load-local() { [[ -f ~/.zshrc.local ]] && source ~/.zshrc.local }
